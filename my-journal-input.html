@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>𓆩♡𓆪 Post a Blurb 𓆩♡𓆪</title>
-    <!-- Puter.js handles the secure cloud logic -->
-    <script src="https://js.puter.com/v2/"></script>
     
     <style>
         /* --- DESIGN THIS SYSTEM TO MATCH YOUR KAWAII AESTHETIC --- */
@@ -92,14 +90,14 @@
     const REPO_NAME = 'my-neocities-site';
     const FILE_PATH = 'posts.json';
 
-    // SECURITY FIX: Fetch the token from your phone's local memory instead of hardcoding it!
+    // Fetch the token from your phone's local memory
     let GITHUB_TOKEN = localStorage.getItem('my_journal_token');
 
     // If your phone doesn't remember a token yet, ask for it!
     if (!GITHUB_TOKEN) {
         GITHUB_TOKEN = prompt("💞 Welcome back! Please paste your fine-grained GitHub token to unlock your dashboard:");
         if (GITHUB_TOKEN) {
-            localStorage.setItem('my_journal_token', GITHUB_TOKEN);
+            localStorage.setItem('my_journal_token', GITHUB_TOKEN.trim());
         } else {
             alert("Dashboard locked. You won't be able to publish without a token!");
         }
@@ -119,7 +117,7 @@
         btn.innerText = "Publishing... 💞";
         btn.disabled = true;
 
-        // Auto-generate Dates: "Jun 16, 2026 - 03:55 AM"
+        // Auto-generate Kawaii Dates: "Jun 16, 2026 - 04:05 AM"
         const now = new Date();
         const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
         const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
@@ -138,8 +136,9 @@
         try {
             const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
             
-            let res = await puter.http.get(url, {
-                'Authorization': `token ${GITHUB_TOKEN}`
+            // 1. Fetch current posts.json file data directly from GitHub using native browser fetch
+            let res = await fetch(url, {
+                headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
             });
             
             let sha = "";
@@ -148,16 +147,20 @@
             if (res.status === 200) {
                 const fileData = await res.json();
                 sha = fileData.sha;
-                currentPosts = JSON.parse(atob(fileData.content.replace(/\n/g, '')));
+                // Safely decode base64 string back into text handling special characters/emojis
+                currentPosts = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, '')))));
             } else if (res.status === 401 || res.status === 403) {
-                // If it fails, your token might be bad. Wipe it so it asks again next time.
                 localStorage.removeItem('my_journal_token');
-                return alert("Invalid Token! The app has reset. Please refresh and try entering it again.");
+                return alert("Invalid Token! The app local memory has reset. Please refresh and try entering your token again.");
+            } else if (res.status !== 404) {
+                return alert(`GitHub Read Error Status: ${res.status}`);
             }
 
+            // 2. Add the new post right to the top of the pile
             currentPosts.unshift(newPost);
 
-            let updateRes = await puter.http.request(url, {
+            // 3. Send the updated array back up to GitHub
+            let updateRes = await fetch(url, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `token ${GITHUB_TOKEN}`,
@@ -175,11 +178,12 @@
                 document.getElementById('title').value = '';
                 document.getElementById('content').value = '';
             } else {
-                alert("GitHub error! Check your token or repository settings.");
+                const errData = await updateRes.json();
+                alert(`GitHub Write Error: ${errData.message}`);
             }
         } catch (error) {
             console.error(error);
-            alert("Something went wrong structural wise.");
+            alert(`App Error: ${error.message}`);
         } finally {
             btn.innerText = "✨ Publish to Feed ✨";
             btn.disabled = false;
