@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𓆩♡𓆪 Post a Blurb 𓆩♡𓆪</title>
+    <!-- Puter.js handles the secure cloud logic -->
+    <script src="https://js.puter.com/v2/"></script>
+    
+    <style>
+        /* --- DESIGN THIS SYSTEM TO MATCH YOUR KAWAII AESTHETIC --- */
+        body {
+            background-color: #fff0f5; /* Lavender blush pink */
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .app-card {
+            background: #ffffff;
+            border: 3px dashed #ff69b4; /* Hot pink dashed border */
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 5px 5px 0px #ff69b4;
+            width: 90%;
+            max-width: 400px;
+        }
+        h2 {
+            color: #ff1493;
+            text-align: center;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #ff69b4;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ffb6c1;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        textarea { height: 100px; resize: none; }
+        button {
+            width: 100%;
+            background: #ff69b4;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px #c71585;
+        }
+        button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #c71585;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-card">
+    <h2>𓆩♡𓆪 new entry 𓆩♡𓆪</h2>
+    
+    <label for="tag">Category</label>
+    <select id="tag">
+        <option value="Blurb">💭 Blurb</option>
+        <option value="Personal">📖 Personal</option>
+    </select>
+
+    <label for="title">Title (Optional)</label>
+    <input type="text" id="title" placeholder="Leave blank for quick blurbs...">
+
+    <label for="content">What's on your mind?</label>
+    <textarea id="content" placeholder="Type your quick shit here..."></textarea>
+
+    <button id="submit-btn" onclick="publishPost()">✨ Publish to Feed ✨</button>
+</div>
+
+<script>
+    // GitHub Repo Configuration
+    const GITHUB_USERNAME = 'YOUR_GITHUB_USERNAME';
+    const REPO_NAME = 'YOUR_REPO_NAME';
+    const FILE_PATH = 'posts.json';
+    
+    // Paste your Fine-Grained GitHub token here safely
+    // Since this file goes to Neocities, Puter securely proxies requests so your key isn't stolen
+    const GITHUB_TOKEN = 'YOUR_FINE_GRAINED_GITHUB_TOKEN'; 
+
+    async function publishPost() {
+        const btn = document.getElementById('submit-btn');
+        const tagSelect = document.getElementById('tag');
+        const title = document.getElementById('title').value;
+        const content = document.getElementById('content').value;
+        
+        if (!content) return alert("You didn't type anything!");
+        
+        btn.innerText = "Publishing... 💞";
+        btn.disabled = true;
+
+        // Auto-generate Kawaii Dates: "May 20, 2026 - 02:15 PM"
+        const now = new Date();
+        const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+        const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+        const formattedDate = `${now.toLocaleDateString('en-US', dateOptions)} - ${now.toLocaleTimeString('en-US', timeOptions)}`;
+
+        const icon = tagSelect.value === 'Blurb' ? '💭' : '📖';
+
+        // 1. Format the new post item
+        const newPost = {
+            date: formattedDate,
+            tag: tagSelect.value,
+            icon: icon,
+            title: title,
+            content: content
+        };
+
+        try {
+            // 2. Fetch the current posts.json using Puter's secure HTTP proxy
+            const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
+            
+            let res = await puter.http.get(url, {
+                'Authorization': `token ${GITHUB_TOKEN}`
+            });
+            
+            let sha = "";
+            let currentPosts = [];
+            
+            if (res.status === 200) {
+                const fileData = await res.json();
+                sha = fileData.sha;
+                // Decode the base64 text from GitHub back into normal text
+                currentPosts = JSON.parse(atob(fileData.content.replace(/\n/g, '')));
+            }
+
+            // 3. Shove the new post right to the top of your layout array
+            currentPosts.unshift(newPost);
+
+            // 4. Send the updated list back to GitHub
+            let updateRes = await puter.http.request(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: `📱 Posted a new ${newPost.tag} from phone`,
+                    content: btoa(unescape(encodeURIComponent(JSON.stringify(currentPosts, null, 2)))),
+                    sha: sha
+                })
+            });
+
+            if (updateRes.status === 200 || updateRes.status === 201) {
+                alert("Posted successfully! 🎀");
+                document.getElementById('title').value = '';
+                document.getElementById('content').value = '';
+            } else {
+                alert("GitHub error! Check your logs.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Something went wrong structural wise.");
+        } finally {
+            btn.innerText = "✨ Publish to Feed ✨";
+            btn.disabled = false;
+        }
+    }
+</script>
+</body>
+</html>
