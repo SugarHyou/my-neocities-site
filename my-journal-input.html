@@ -1,183 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Gyaru/o Style + Artist 𓆩♡𓆪 Bright Leopard Obsessed">
     <title>SugarHyou ★</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/png" href="/assets/art/Leopard Heart (Apr 22, 2026).png">
     <style>
-        
-        .app-card {
-            background: #ffffff;
-            border: 3px dashed #ff69b4; /* Hot pink dashed border */
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 5px 5px 0px #ff69b4;
-            width: 90%;
-            max-width: 400px;
-        }
-        
-        label {
-            display: block;
-            margin: 15px 0 5px;
-            color: #ff69b4;
-            font-weight: bold;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ffb6c1;
-            border-radius: 10px;
-            box-sizing: border-box;
-            font-family: inherit;
-        }
-        textarea { height: 100px; resize: none; }
-        button {
-            width: 100%;
-            background: #ff69b4;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 20px;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px #c71585;
-        }
-        button:active {
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px #c71585;
-        }
+
     </style>
 </head>
+
 <body>
 
-<div class="app-card">
-    <h2>𓆩♡𓆪 new entry 𓆩♡𓆪</h2>
-    
-    <label for="tag">Category</label>
-    <select id="tag">
-        <option value="Blurb">💭 Blurb</option>
-        <option value="Personal">📖 Personal</option>
-    </select>
+    <div class="grid-container-2">
+    <main id="col-center"> 
+    <div class="double-box flex">
+        <h2 class="tab-title lang-text" data-en="new entry" data-jp="ホーム">new entry</h2>
+        <div class="leopard-layer flex column">
+            <header></header>
+            <div class="inner-box flex column">
+                <div class="app-card flex column align-center">
 
-    <label for="title">Title (Optional)</label>
-    <input type="text" id="title" placeholder="Leave blank for quick blurbs...">
+                    <label for="tag">Category</label>
+                    <select id="tag">
+                        <option value="Blurb">💭 Blurb</option>
+                        <option value="Personal">📖 Personal</option>
+                    </select>
 
-    <label for="content">What's on your mind?</label>
-    <textarea id="content" placeholder="Type your quick shit here..."></textarea>
+                    <label for="title">Title</label>
+                    <input type="text" id="title" placeholder="Leave blank for quick blurbs...">
 
-    <button id="submit-btn" onclick="publishPost()">✨ Publish to Feed ✨</button>
-</div>
+                    <label for="content">What's on your mind?</label>
+                    <textarea id="content" placeholder="Type your quick shit here..."></textarea>
 
-<script>
-    // GitHub Repo Configuration
-    const GITHUB_USERNAME = 'SugarHyou';
-    const REPO_NAME = 'my-neocities-site';
-    const FILE_PATH = 'posts.json';
+                    <button id="submit-btn" onclick="publishPost()">✨ Publish to Feed ✨</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+    <nav id="col-right">
+      <div id="nav-box" class="double-box flex">
+        <h2 class="tab-title lang-text" data-en="Menu" data-jp="メニュー">Menu</h2>
+        <div class="leopard-layer flex column">
+          <div class="inner-box flex column">
+            <div id="nav-links">
+              <a href="/index.html" class="lang-text" data-en="🏠 Home" data-jp="🏠 ホーム">🏠 Home</a>
+              <a href="/profile.html" class="lang-text" data-en="🎀 Profile" data-jp="🎀 プロフィール">🎀 Profile</a>
+              <a href="/art.html" class="lang-text" data-en="🎨 Art" data-jp="🎨 アート">🎨 Art</a>
+              <a href="/journal.html" class="lang-text" data-en="📖 Journal" data-jp="📖 日記">📖 Journal</a>
+              <a href="https://sugarhyou.atabook.org/" class="lang-text" data-en="💌 Guestbook" data-jp="💌 ゲストブック">💌
+                Guestbook</a>
+              <a href="/neighbors.html" class="lang-text" data-en="💞 Neighbors" data-jp="💞 リンク集">💞 Neighbors</a>
+              <a href="/fanlistings.html" class="lang-text" data-en="🏷️ Fanlistings" data-jp="🏷️ ファンリスティング">🏷️
+                Fanlistings</a>
+            </div>
 
-    // Fetch the token from your phone's local memory
-    let GITHUB_TOKEN = localStorage.getItem('my_journal_token');
+            <div class="calendar-container">
+              <div class="calendar-header">
+                <button id="prevMonth">◀</button>
+                <h2 id="monthDisplay"></h2>
+                <button id="nextMonth">▶</button>
+              </div>
+              <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
 
-    // If your phone doesn't remember a token yet, ask for it!
-    if (!GITHUB_TOKEN) {
-        GITHUB_TOKEN = prompt("💞 Welcome back! Please paste your fine-grained GitHub token to unlock your dashboard:");
-        if (GITHUB_TOKEN) {
-            localStorage.setItem('my_journal_token', GITHUB_TOKEN.trim());
-        } else {
-            alert("Dashboard locked. You won't be able to publish without a token!");
-        }
-    }
+            <audio id="main-player"></audio>
 
-    async function publishPost() {
-        const btn = document.getElementById('submit-btn');
-        const tagSelect = document.getElementById('tag');
-        const title = document.getElementById('title').value;
-        const content = document.getElementById('content').value;
-        
+            <div class="button-row flex">
+              <button onclick="changeTrack(-1)" title="Backward">◀◀</button>
+              <button id="play-pause-btn" onclick="togglePlay()" title="Play/Pause">▶</button>
+              <button onclick="toggleLoop(this)" title="Loop" class="loop-btn">↻</button>
+              <button onclick="changeTrack(1)" title="Forward">▶▶</button>
+            </div>
+
+            <div class="now-playing-text lang-text" data-en="♪ Select a track..." data-jp="♪ トラックを選択してね...">♪ Select a
+              track...</div>
+            <ul class="song-list" id="js-playlist-output"></ul>
+
+            <div class="lang-menu">
+              <button id="lang-toggle" onclick="toggleLanguage()" style="width: 100%;">
+                🇯🇵 Switch to JP
+              </button>
+            </div>
+
+            <div class="settings-menu">
+              <select id="theme-select" onchange="changeTheme(this.value)" style="width: 100%;">
+                <option value="light">Default</option>
+                <option value="blue">Blue</option>
+                <option value="purple">Purple</option>
+                <option value="tropical">Tropical</option>
+                <option value="toy-pianos">Toy Pianos</option>
+                <option value="dgrp">Danganronpa</option>
+                <option value="flip">Flip</option>
+              </select>
+            </div>
+
+            <div class="flex justify-center align-center">
+              <img src="/assets/graphics/buttons/SugarHyou.gif">
+            </div>
+            <div class="flex align-center justify-center" style="gap: 10px;">
+              <a href="https://www.instagram.com/sugarhyou/"><img src="/assets/art/Instagram (Apr 26, 2026).png"></a>
+              <a href="https://www.tiktok.com/@sugarhyou"><img src="/assets/art/TikTok (Apr 26, 2026).png"></a>
+              <a href="https://www.tumblr.com/blog/sugarhyou"><img src="/assets/art/Tumblr (Apr 26, 2026).png"></a>
+              <a href="https://www.youtube.com/@SugarHyou"><img src="/assets/art/YouTube (Apr 26, 2026).png"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    </div>
+
+    <script>
+        const GITHUB_USERNAME = 'SugarHyou';
+        const REPO_NAME = 'my-neocities-site';
+        const FILE_PATH = 'posts.json';
+
+        let GITHUB_TOKEN = localStorage.getItem('my_journal_token');
+
         if (!GITHUB_TOKEN) {
-            return alert("No token found! Please refresh the page to enter it.");
-        }
-        if (!content) return alert("You didn't type anything!");
-        
-        btn.innerText = "Publishing... 💞";
-        btn.disabled = true;
-
-        // Auto-generate Kawaii Dates: "Jun 16, 2026 - 04:05 AM"
-        const now = new Date();
-        const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
-        const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
-        const formattedDate = `${now.toLocaleDateString('en-US', dateOptions)} - ${now.toLocaleTimeString('en-US', timeOptions)}`;
-
-        const icon = tagSelect.value === 'Blurb' ? '💭' : '📖';
-
-        const newPost = {
-            date: formattedDate,
-            tag: tagSelect.value,
-            icon: icon,
-            title: title,
-            content: content
-        };
-
-        try {
-            const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
-            
-            // 1. Fetch current posts.json file data directly from GitHub using native browser fetch
-            let res = await fetch(url, {
-                headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
-            });
-            
-            let sha = "";
-            let currentPosts = [];
-            
-            if (res.status === 200) {
-                const fileData = await res.json();
-                sha = fileData.sha;
-                // Safely decode base64 string back into text handling special characters/emojis
-                currentPosts = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, '')))));
-            } else if (res.status === 401 || res.status === 403) {
-                localStorage.removeItem('my_journal_token');
-                return alert("Invalid Token! The app local memory has reset. Please refresh and try entering your token again.");
-            } else if (res.status !== 404) {
-                return alert(`GitHub Read Error Status: ${res.status}`);
-            }
-
-            // 2. Add the new post right to the top of the pile
-            currentPosts.unshift(newPost);
-
-            // 3. Send the updated array back up to GitHub
-            let updateRes = await fetch(url, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: `📱 Posted a new ${newPost.tag} from phone`,
-                    content: btoa(unescape(encodeURIComponent(JSON.stringify(currentPosts, null, 2)))),
-                    sha: sha
-                })
-            });
-
-            if (updateRes.status === 200 || updateRes.status === 201) {
-                alert("Posted successfully! 🎀");
-                document.getElementById('title').value = '';
-                document.getElementById('content').value = '';
+            GITHUB_TOKEN = prompt("💞 Welcome back! Please paste your fine-grained GitHub token to unlock your dashboard:");
+            if (GITHUB_TOKEN) {
+                localStorage.setItem('my_journal_token', GITHUB_TOKEN.trim());
             } else {
-                const errData = await updateRes.json();
-                alert(`GitHub Write Error: ${errData.message}`);
+                alert("Dashboard locked. You won't be able to publish without a token!");
             }
-        } catch (error) {
-            console.error(error);
-            alert(`App Error: ${error.message}`);
-        } finally {
-            btn.innerText = "✨ Publish to Feed ✨";
-            btn.disabled = false;
         }
-    }
-</script>
+
+        async function publishPost() {
+            const btn = document.getElementById('submit-btn');
+            const tagSelect = document.getElementById('tag');
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+
+            if (!GITHUB_TOKEN) {
+                return alert("No token found! Please refresh the page to enter it.");
+            }
+            if (!content) return alert("You didn't type anything!");
+
+            btn.innerText = "Publishing... 💞";
+            btn.disabled = true;
+
+            const now = new Date();
+            const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+            const formattedDate = `${now.toLocaleDateString('en-US', dateOptions)} - ${now.toLocaleTimeString('en-US', timeOptions)}`;
+
+            const icon = tagSelect.value === 'Blurb' ? '💭' : '📖';
+
+            const newPost = {
+                date: formattedDate,
+                tag: tagSelect.value,
+                icon: icon,
+                title: title,
+                content: content
+            };
+
+            try {
+                const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
+
+                let res = await fetch(url, {
+                    headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
+                });
+
+                let sha = "";
+                let currentPosts = [];
+
+                if (res.status === 200) {
+                    const fileData = await res.json();
+                    sha = fileData.sha;
+                    currentPosts = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, '')))));
+                } else if (res.status === 401 || res.status === 403) {
+                    localStorage.removeItem('my_journal_token');
+                    return alert("Invalid Token! The app local memory has reset. Please refresh and try entering your token again.");
+                } else if (res.status !== 404) {
+                    return alert(`GitHub Read Error Status: ${res.status}`);
+                }
+
+                currentPosts.unshift(newPost);
+
+                let updateRes = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: `📱 Posted a new ${newPost.tag} from phone`,
+                        content: btoa(unescape(encodeURIComponent(JSON.stringify(currentPosts, null, 2)))),
+                        sha: sha
+                    })
+                });
+
+                if (updateRes.status === 200 || updateRes.status === 201) {
+                    alert("Posted successfully! 🎀");
+                    document.getElementById('title').value = '';
+                    document.getElementById('content').value = '';
+                } else {
+                    const errData = await updateRes.json();
+                    alert(`GitHub Write Error: ${errData.message}`);
+                }
+            } catch (error) {
+                console.error(error);
+                alert(`App Error: ${error.message}`);
+            } finally {
+                btn.innerText = "✨ Publish to Feed ✨";
+                btn.disabled = false;
+            }
+        }
+    </script>
+    <script src="/script.js"></script>
 </body>
+
 </html>
