@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tsuyome / Agejo Style Gaijin + Artist 𓆩♡𓆪 Bright Leopard Obsessed">
+    <title>SugarHyou ★</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="/assets/art/Leopard Heart (Apr 22, 2026).png">
+</head>
+
+<body>
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+
+    <div class="grid-container-2">
+
+        <main id="col-center">
+            <div class="double-box flex">
+                <h2 class="tab-title">Fanlistings</h2>
+                <div class="leopard-layer flex column">
+
+                    <header></header>
+                    <div class="inner-box flex column">
+                        <div id="shop-interface">
+                            <div class="shop-header flex align-center justify-center">
+                                <button id="back-btn" onclick="showCategories()" style="display:none;">◀
+                                    BACK</button>
+                                <h2 id="shop-title">★ SUGAR'S SHOP ★</h2>
+                            </div>
+
+                            <div id="category-grid" class="flex wrap justify-center">
+                                <div class="cat-card" onclick="showProducts('keychains')">
+                                    <img src="/assets/graphics/categories/keychains.png" alt="Keychains">
+                                    <span>KEYCHAINS</span>
+                                </div>
+                                <div class="cat-card" onclick="showProducts('kandi')">
+                                    <img src="/assets/graphics/categories/kandi.png" alt="Kandi">
+                                    <span>CHEAP KANDI</span>
+                                </div>
+                                <div class="cat-card" onclick="showProducts('clips')">
+                                    <img src="/assets/graphics/shop/clips/3D Perler Dangle Bow (Blue).jpg" alt="Hair Clips">
+                                    <span>CLIPS & BUTTONS</span>
+                                </div>
+                            </div>
+
+                            <div id="product-list" class="flex wrap" style="display:none;">
+                            </div>
+                        </div>
+                        <style>
+                            .shop-header {
+                                position: relative;
+                                margin-bottom: 15px;
+                                border-bottom: var(--standard-border) dashed var(--hot-pink);
+                                padding-bottom: 10px;
+                            }
+
+                            #back-btn {
+                                left: 0;
+                            }
+                            
+                            .cat-card {
+                                width: 140px;
+                                margin: 10px;
+                                text-align: center;
+                                cursor: pointer;
+                                transition: transform 0.2s;
+                            }
+
+                            .cat-card:hover {
+                                transform: scale(1.1) rotate(3deg);
+                            }
+
+                            .cat-card img {
+                                width: 100%;
+                                border: var(--large-border) solid var(--hot-pink);
+                                border-radius: var(--standard-radius);
+                                background: var(--white);
+                            }
+
+                            .cat-card span {
+                                display: block;
+                                background: var(--hot-pink);
+                                color: var(--white);
+                                margin-top: -10px;
+                                position: relative;
+                                font-size: var(--small-font-size);
+                            }
+
+                            #product-list {
+                                display: flex;
+                                gap: 15px;
+                                padding: 10px;
+                            }
+
+                            .product-item {
+                                border: var(--small-border) solid var(--hot-pink);
+                                background: var(--pale-pink);
+                                padding: 10px;
+                                text-align: center;
+                                position: relative;
+                                overflow: hidden;
+                                max-width: 230px;
+                            }
+
+                            .product-item img {
+                                width: 100%;
+                            }
+
+                            .cat-card:hover img {
+                                animation: bounce 0.5s infinite alternate;
+                                border-color: var(--dark-berry);
+                            }
+
+                            @keyframes bounce {
+                                from {
+                                    transform: translateY(0);
+                                }
+
+                                to {
+                                    transform: translateY(-5px);
+                                }
+                            }
+                        </style>
+                        <script>
+                            const shopData = {
+                                clips: [
+                                    {
+                                        name: "Pixel Tenshi Bow",
+                                        price: "$8.00",
+                                        img: "/assets/graphics/shop/clips/3D Perler Dangle Bow (Blue).jpg", // The photo you just showed me!
+                                        desc: "Handmade perler bow with heart dangles :3c"
+                                    },
+                                    {
+                                        name: "Leopard Star Clip",
+                                        price: "$5.00",
+                                        img: "/assets/shop/star-clip.png",
+                                        desc: "Hot pink leopard print!"
+                                    }
+                                ],
+                                kandi: [
+                                    { name: "Neon Star Cuff", price: "$10.00", img: "/assets/shop/kandi1.png", desc: "Super chunky!" }
+                                ],
+                                keychains: [
+                                    { name: "Andy Acrylic", price: "$12.00", img: "/assets/shop/andy-key.png", desc: "2-inch double sided" }
+                                ]
+                            };
+
+                            function showProducts(category) {
+                                const list = document.getElementById('product-list');
+                                const grid = document.getElementById('category-grid');
+                                const backBtn = document.getElementById('back-btn');
+                                const title = document.getElementById('shop-title');
+
+                                grid.style.display = 'none';
+                                list.style.display = 'flex';
+                                backBtn.style.display = 'block';
+                                title.innerText = `★ ${category.toUpperCase()} ★`;
+
+                                list.innerHTML = shopData[category].map(item => `
+        <div class="product-item">
+            <div class="card-header">${item.name}</div>
+            <img src="${item.img}">
+            <div class="card-content">
+                <p>${item.desc}</p>
+                <span class="card-title" style="font-weight:bold;">${item.price}</span>
+                <a href="https://sugarhyou.atabook.org/" class="card-link" style="display:block; margin-top:5px;">INQUIRE →</a>
+            </div>
+        </div>
+    `).join('');
+                            }
+
+                            function showCategories() {
+                                document.getElementById('category-grid').style.display = 'flex';
+                                document.getElementById('product-list').style.display = 'none';
+                                document.getElementById('back-btn').style.display = 'none';
+                                document.getElementById('shop-title').innerText = '★ SUGAR\'S SHOP ★';
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav id="col-right">
+            <div id="nav-box" class="double-box flex">
+                <h2 class="tab-title">Menu</h2>
+                <div class="leopard-layer flex column">
+                    <div class="inner-box flex column">
+                        <div id="nav-links">
+                            <a href="/index.html">🏠 Home</a>
+                            <a href="/profile.html">🎀 Profile</a>
+                            <a href="/art.html">🎨 Art</a>
+                            <a href="/journal.html">📖 Journal</a>
+                            <a href="https://sugarhyou.atabook.org/">💌 Guestbook</a>
+                            <a href="/neighbors.html">💞 Neighbors</a>
+                            <a href="/fanlistings.html">🏷️ Fanlistings</a>
+                        </div>
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <button id="prevMonth">◀</button>
+                                <h2 id="monthDisplay"></h2>
+                                <button id="nextMonth">▶</button>
+                            </div>
+                            <div class="calendar-grid" id="calendarGrid">
+                            </div>
+                        </div>
+                        <audio id="main-player">
+                        </audio>
+                        <div class="button-row flex">
+                            <button onclick="changeTrack(-1)" title="Backward">◀◀</button>
+                            <button id="play-pause-btn" onclick="togglePlay()" title="Play/Pause">▶</button>
+                            <button onclick="toggleLoop(this)" title="Loop" class="loop-btn">↻</button>
+                            <button onclick="changeTrack(1)" title="Forward">▶▶</button>
+                        </div>
+
+                        <div class="now-playing-text">♪ Select a track...</div>
+                        <ul class="song-list" id="js-playlist-output">
+                        </ul>
+                        <div class="settings-menu">
+                            <select id="theme-select" onchange="changeTheme(this.value)" style="width: 100%;">
+                                <option value="light">Default</option>
+                                <option value="blue">Blue</option>
+                                <option value="purple">Purple</option>
+                                <option value="flip">Flip</option>
+                            </select>
+                        </div>
+                        <img src="/assets/graphics/buttons/SugarHyou.gif"
+                            style="display: block; max-height: 29px; margin: 0 auto;">
+                            <div class="flex align-center justify-center" style="gap: 10px;">
+                                    <a href="https://www.instagram.com/sugarhyou/">
+                                        <img src="/assets/art/Instagram (Apr 26, 2026).png">
+                                    </a>
+                                    <a href="https://www.tiktok.com/@sugarhyou">
+                                        <img src="/assets/art/TikTok (Apr 26, 2026).png">
+                                    </a>
+                                    <a href="https://www.tumblr.com/blog/sugarhyou">
+                                        <img src="/assets/art/Tumblr (Apr 26, 2026).png">
+                                    </a>
+                                    <a href="https://www.youtube.com/@SugarHyou">
+                                        <img src="/assets/art/YouTube (Apr 26, 2026).png">
+                                    </a>
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <script src="/script.js"></script>
+</body>
+
+</html>

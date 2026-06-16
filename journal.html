@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gyaru/o Style + Artist 𓆩♡𓆪 Bright Leopard Obsessed">
+    <title>SugarHyou ★</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="/assets/art/Leopard Heart (Apr 22, 2026).png">
+</head>
+
+<body>
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+    <div class="grid-container-2">
+
+        <main id="col-center">
+            <div class="double-box flex">
+                <h2 class="tab-title">Journal</h2>
+                <div class="leopard-layer flex column">
+                    <header></header>
+                    <div class="inner-box flex column" style="gap: 25px; padding: 15px;">
+                        <h1 style="text-align: center;">Choose A Journal!</h1>
+                        <div id="magazine-rack" class="flex wrap justify-center" style="gap: 20px;">
+                            <a href="/journal/personal.html" class="manga-volume vol-pink"
+                                style="text-decoration: none; transition: transform 0.2s ease;">
+                                <div class="book-card flex column">
+                                    <div class="book-top-bar flex align-center">
+                                        <span class="vol-badge">VOL. 01</span>
+                                        <span class="book-date">May 2026</span>
+                                    </div>
+                                    <div class="book-title-strip">Personal</div>
+                                    <img src="/assets/camera/May 24, 2026.jpg" alt="">
+                                </div>
+                            </a>
+
+                            <a href="/journal/character-book.html" class="manga-volume vol-blue"
+                                style="text-decoration: none; transition: transform 0.2s ease;">
+                                <div class="book-card flex column">
+                                    <div class="book-top-bar flex align-center">
+                                        <span class="vol-badge">VOL. 02</span>
+                                        <span class="book-date">May 2026</span>
+                                    </div>
+                                    <div class="book-title-strip">Character Book</div>
+                                    <img src="/assets/art/Venus (May 16, 2026).png" alt="">
+                                </div>
+                            </a>
+
+                            <a href="/journal/events.html" class="manga-volume vol-purple"
+                                style="text-decoration: none; transition: transform 0.2s ease;">
+                                <div class="book-card flex column">
+                                    <div class="book-top-bar flex align-center">
+                                        <span class="vol-badge">VOL. 03</span>
+                                        <span class="book-date">May 2026</span>
+                                    </div>
+                                    <div class="book-title-strip">Events</div>
+                                    <img src="/assets/camera/May 30, 2026.jpg" alt="">
+                                </div>
+                            </a>
+
+                            <a href="/journal/tutorials.html" class="manga-volume vol-yellow"
+                                style="text-decoration: none; transition: transform 0.2s ease;">
+                                <div class="book-card flex column">
+                                    <div class="book-top-bar flex align-center">
+                                        <span class="vol-badge">VOL. 04</span>
+                                        <span class="book-date">May 2026</span>
+                                    </div>
+                                    <div class="book-title-strip">Tutorials</div>
+                                    <img src="/assets/camera/May 25, 2026.jpg" alt="">
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="journal-feed-container">
+                            <h3 style="text-align: center;">... Or Read Some Quick Posts!</h3>
+                            <br>
+                            <div class="feed-scrollbox flex row justify-center" style="gap: 15px;">
+                                <article class="journal-entry entry-blurb">
+                                    <div class="entry-meta flex justify-between">
+                                        <span class="entry-date">May 23, 2026 - 06:00 PM</span>
+                                        <span class="entry-tag tag-blurb">💭 Blurb</span>
+                                    </div>
+                                    <div class="entry-content">
+                                        <p>Just redesigned the layout! Trying to figure out how I want to organize my
+                                            thoughts.𓆩♡𓆪</p>
+                                    </div>
+                                </article>
+
+                                <article class="journal-entry entry-full">
+                                    <div class="entry-meta flex justify-between">
+                                        <span class="entry-date">May 20, 2026 - 02:15 PM</span>
+                                        <span class="entry-tag tag-personal">📖 Personal</span>
+                                    </div>
+                                    <h4 class="entry-title">PPPD, Brain Fog, & Digital Spaces</h4>
+                                    <div class="entry-content">
+                                        <p>It's nice to have a spot where everything can be bright pink, leopard print,
+                                            and completely unbothered by external algorithms.</p>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav id="col-right">
+            <div id="nav-box" class="double-box flex">
+                <h2 class="tab-title">Menu</h2>
+                <div class="leopard-layer flex column">
+                    <div class="inner-box flex column">
+                        <div id="nav-links">
+                            <a href="/index.html">🏠 Home</a>
+                            <a href="/profile.html">🎀 Profile</a>
+                            <a href="/art.html">🎨 Art</a>
+                            <a href="/journal.html">📖 Journal</a>
+                            <a href="https://sugarhyou.atabook.org/">💌 Guestbook</a>
+                            <a href="/neighbors.html">💞 Neighbors</a>
+                            <a href="/fanlistings.html">🏷️ Fanlistings</a>
+                        </div>
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <button id="prevMonth">◀</button>
+                                <h2 id="monthDisplay"></h2>
+                                <button id="nextMonth">▶</button>
+                            </div>
+                            <div class="calendar-grid" id="calendarGrid">
+                            </div>
+                        </div>
+                        <audio id="main-player">
+                        </audio>
+                        <div class="button-row flex">
+                            <button onclick="changeTrack(-1)" title="Backward">◀◀</button>
+                            <button id="play-pause-btn" onclick="togglePlay()" title="Play/Pause">▶</button>
+                            <button onclick="toggleLoop(this)" title="Loop" class="loop-btn">↻</button>
+                            <button onclick="changeTrack(1)" title="Forward">▶▶</button>
+                        </div>
+
+                        <div class="now-playing-text">♪ Select a track...</div>
+                        <ul class="song-list" id="js-playlist-output">
+                        </ul>
+                        <div class="settings-menu">
+                            <select id="theme-select" onchange="changeTheme(this.value)" style="width: 100%;">
+                                <option value="light">Default</option>
+                                <option value="blue">Blue</option>
+                                <option value="purple">Purple</option>
+                                <option value="tropical">Tropical</option>
+                                <option value="toy-pianos">Toy Pianos</option>
+                                <option value="flip">Flip</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-center align-center">
+                            <img src="/assets/graphics/buttons/SugarHyou.gif">
+                        </div>
+                        <div class="flex align-center justify-center" style="gap: 10px;">
+                            <a href="https://www.instagram.com/sugarhyou/">
+                                <img src="/assets/art/Instagram (Apr 26, 2026).png">
+                            </a>
+                            <a href="https://www.tiktok.com/@sugarhyou">
+                                <img src="/assets/art/TikTok (Apr 26, 2026).png">
+                            </a>
+                            <a href="https://www.tumblr.com/blog/sugarhyou">
+                                <img src="/assets/art/Tumblr (Apr 26, 2026).png">
+                            </a>
+                            <a href="https://www.youtube.com/@SugarHyou">
+                                <img src="/assets/art/YouTube (Apr 26, 2026).png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <script src="/script.js"></script>
+</body>
+
+</html>
