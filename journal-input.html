@@ -9,12 +9,52 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/png" href="/assets/art/Leopard Heart (Apr 22, 2026).png">
     <style>
+        .app-card {
+    gap: 10px;
+}
 
+label {
+    font-size: var(--large-font-size);
+    color: var(--dark-berry);
+    align-self: flex-start;
+}
+
+#tag, input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: var(--small-border) solid var(--hot-pink);
+    border-radius: var(--small-radius);
+    background: var(--white);
+    color: var(--dark-berry);
+    font-family: inherit;
+    font-size: var(--small-font-size);
+}
+
+textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+#submit-btn {
+    background: var(--hot-pink);
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    border-radius: var(--standard-radius);
+    font-family: inherit;
+    font-size: var(--standard-font-size);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#submit-btn:hover {
+    background: var(--dark-berry);
+}
     </style>
 </head>
 
 <body>
-
+<button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
     <div class="grid-container-2">
     <main id="col-center"> 
     <div class="double-box flex">
@@ -36,7 +76,7 @@
                     <label for="content">What's on your mind?</label>
                     <textarea id="content" placeholder="Type your quick shit here..."></textarea>
 
-                    <button id="submit-btn" onclick="publishPost()">✨ Publish to Feed ✨</button>
+                    <button id="submit-btn" onclick="publishPost()">Publish to Feed</button>
                 </div>
             </div>
         </div>
