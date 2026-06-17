@@ -11,10 +11,10 @@
   {
     "id": "art",
     "header": "RECENT ART",
-    "media": "/assets/art/",
+    "media": "/assets/art/4129.png",
     "isMediaVideo": false,
-    "title": "Title",
-    "desc": "Description",
+    "title": "Splatoon (Jun 17, 2026)",
+    "desc": "Test",
     "link": "/assets/art/"
   },
   {
