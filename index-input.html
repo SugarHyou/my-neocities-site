@@ -74,8 +74,11 @@
                                 <option value="anime">Currently Watching</option>
                             </select>
 
-                            <label for="media-url">Media URL (Link to image/video)</label>
-                            <input type="text" id="media-url" placeholder="/assets/art/your-art.png">
+                            <label for="file-upload">Upload Art (Optional)</label>
+                            <input type="file" id="file-upload" accept="image/*">
+
+                            <label for="media-url">Or Media URL (For Video/Game/Anime)</label>
+                            <input type="text" id="media-url" placeholder="Paste link here...">
 
                             <label for="title">Title</label>
                             <input type="text" id="title">
@@ -179,53 +182,78 @@
         let GITHUB_TOKEN = localStorage.getItem('my_journal_token');
 
         async function publishPost() {
-            const btn = document.getElementById('submit-btn');
-            const selectedId = document.getElementById('tag').value.toLowerCase();
-            const title = document.getElementById('title').value;
-            const content = document.getElementById('content').value;
-            const media = document.getElementById('media-url').value;
+    const btn = document.getElementById('submit-btn');
+    const fileInput = document.getElementById('file-upload');
+    const urlInput = document.getElementById('media-url'); // New URL input
+    const selectedId = document.getElementById('tag').value.toLowerCase();
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
 
-            if (!GITHUB_TOKEN) return alert("No token found!");
+    if (!GITHUB_TOKEN) return alert("No token found!");
 
-            btn.innerText = "Updating... 💞";
-            btn.disabled = true;
+    btn.innerText = "Processing... 🎀";
+    btn.disabled = true;
 
-            try {
-                const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
+    try {
+        let mediaUrl = urlInput.value; // Default to the URL box
 
-                // 1. Get current data
-                let res = await fetch(url, { headers: { 'Authorization': `token ${GITHUB_TOKEN}` } });
-                let fileData = await res.json();
-                let sha = fileData.sha;
-                let showcaseData = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, '')))));
+        // 1. If a file is selected, upload it and override mediaUrl
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const base64Content = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result.split(',')[1]);
+                reader.readAsDataURL(file);
+            });
 
-                // 2. Find and update the specific card
-                const index = showcaseData.findIndex(item => item.id === selectedId);
-                if (index > -1) {
-                    showcaseData[index].title = title;
-                    showcaseData[index].desc = content;
-                    showcaseData[index].media = media;
-                }
+            const uploadPath = `assets/art/${file.name}`;
+            const uploadUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${uploadPath}`;
 
-                // 3. Save back to GitHub
-                let updateRes = await fetch(url, {
-                    method: 'PUT',
-                    headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        message: `📱 Updated ${selectedId} card`,
-                        content: btoa(unescape(encodeURIComponent(JSON.stringify(showcaseData, null, 2)))),
-                        sha: sha
-                    })
-                });
-
-                if (updateRes.status === 200) alert("Updated successfully! 🎀");
-            } catch (error) {
-                alert(`Error: ${error.message}`);
-            } finally {
-                btn.innerText = "✨ Publish to Feed ✨";
-                btn.disabled = false;
-            }
+            await fetch(uploadUrl, {
+                method: 'PUT',
+                headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: `Uploaded ${file.name}`,
+                    content: base64Content
+                })
+            });
+            mediaUrl = `/${uploadPath}`;
         }
+
+        // 2. Fetch current index.json
+        const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
+        let res = await fetch(url, { headers: { 'Authorization': `token ${GITHUB_TOKEN}` } });
+        let fileData = await res.json();
+        let sha = fileData.sha;
+        let showcaseData = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, '')))));
+
+        // 3. Update the specific card
+        const index = showcaseData.findIndex(item => item.id === selectedId);
+        if (index > -1) {
+            showcaseData[index].title = title;
+            showcaseData[index].desc = content;
+            if (mediaUrl) showcaseData[index].media = mediaUrl; // Use whichever one we have
+        }
+
+        // 4. Save back to GitHub
+        await fetch(url, {
+            method: 'PUT',
+            headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: `📱 Updated ${selectedId} card`,
+                content: btoa(unescape(encodeURIComponent(JSON.stringify(showcaseData, null, 2)))),
+                sha: sha
+            })
+        });
+
+        alert("Success! 🎀");
+    } catch (error) {
+        alert("Error: " + error.message);
+    } finally {
+        btn.disabled = false;
+        btn.innerText = "✨ Publish to Feed ✨";
+    }
+}
     </script>
     <script src="/script.js"></script>
 </body>
