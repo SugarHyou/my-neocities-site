@@ -669,7 +669,8 @@ a:hover {
 }
 
 .journal-entry {
-  flex: 1;
+  max-width: 400px;
+  flex-grow: 1;
   padding: 10px;
   position: relative;
 }
@@ -701,11 +702,11 @@ p:last-child {
   color: var(--white);
 }
 
-.tag-blurb {
+.blurb {
   background: #9d4edd;
 }
 
-.tag-personal {
+.entry-tag .personal {
   background: var(--hot-pink);
 }
 
@@ -943,6 +944,50 @@ border-color: transparent var(--white) transparent transparent;
   font-weight: 900;
   color: var(--dark-berry);
   margin: 0 0 4px 0;
+}
+
+.post-card {
+    background: var(--pale-pink); /* Light pink background */
+    border: 2px solid var(--dark-berry);
+    border-radius: 15px;
+    padding: 15px;
+    margin: 10px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.pfp {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ff69b4;
+}
+
+.username {
+    font-weight: bold;
+    color: #ff69b4;
+    display: block;
+}
+
+.date {
+    font-size: 10px;
+    color: #ffb6c1;
+}
+
+.post-title {
+    margin: 5px 0;
+    color: var(--dark-berry);
+}
+
+.post-content {
+    line-height: 1.4;
 }
 
 [data-theme="green"] {

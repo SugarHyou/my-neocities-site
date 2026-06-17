@@ -72,31 +72,8 @@
                         </div>
 
                         <div class="journal-feed-container">
-                            <h3 style="text-align: center;">... Or Read Some Quick Posts!</h3>
-                            <br>
-                            <div class="feed-scrollbox flex row justify-center" style="gap: 15px;">
-                                <article class="journal-entry entry-blurb">
-                                    <div class="entry-meta flex justify-between">
-                                        <span class="entry-date">May 23, 2026 - 06:00 PM</span>
-                                        <span class="entry-tag tag-blurb">💭 Blurb</span>
-                                    </div>
-                                    <div class="entry-content">
-                                        <p>Just redesigned the layout! Trying to figure out how I want to organize my
-                                            thoughts.𓆩♡𓆪</p>
-                                    </div>
-                                </article>
-
-                                <article class="journal-entry entry-full">
-                                    <div class="entry-meta flex justify-between">
-                                        <span class="entry-date">May 20, 2026 - 02:15 PM</span>
-                                        <span class="entry-tag tag-personal">📖 Personal</span>
-                                    </div>
-                                    <h4 class="entry-title">PPPD, Brain Fog, & Digital Spaces</h4>
-                                    <div class="entry-content">
-                                        <p>It's nice to have a spot where everything can be bright pink, leopard print,
-                                            and completely unbothered by external algorithms.</p>
-                                    </div>
-                                </article>
+                            <h3 class="feed-heading">... Or Read Some Quick Posts!</h3>
+                            <div id="feed-scrollbox" class="flex wrap justify-center">
                             </div>
                         </div>
                     </div>
@@ -171,6 +148,44 @@
             </div>
         </nav>
     </div>
+    <script>
+        async function loadPosts() {
+    try {
+        const response = await fetch('/posts.json');
+        const posts = await response.json();
+        const container = document.getElementById('feed-scrollbox');
+        container.innerHTML = ''; 
+
+        posts.forEach(post => {
+    container.innerHTML += `
+        <article class="post-card">
+            <div class="post-header" style="display: flex; align-items: center;">
+                
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="/assets/art/Leopard Heart (Apr 22, 2026).png" class="pfp" alt="PFP">
+                    <div class="post-meta">
+                        <span class="username">SugarHyou</span>
+                        <span class="date">${post.date}</span>
+                    </div>
+                </div>
+
+                <span class="entry-tag ${post.tag.toLowerCase()}" style="margin-left: auto;">
+                    ${post.icon} ${post.tag}
+                </span>
+            </div>
+            
+            ${post.title ? `<h2 class="post-title">${post.title}</h2>` : ''}
+            <div class="post-content">
+                <p>${post.content}</p>
+            </div>
+        </article>`;
+});
+    } catch (e) {
+        console.error("Could not load posts:", e);
+    }
+}
+loadPosts();
+        </script>
     <script src="/script.js"></script>
 </body>
 
