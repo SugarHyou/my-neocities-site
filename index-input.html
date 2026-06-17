@@ -182,7 +182,7 @@
         let GITHUB_TOKEN = localStorage.getItem('my_journal_token');
 
         if (!GITHUB_TOKEN) {
-            GITHUB_TOKEN = prompt("💞 Welcome back! Please paste your fine-grained GitHub token to unlock your dashboard:");
+            GITHUB_TOKEN = prompt("💞 Welcome back! Please insert a dollar to unlock your dashboard:");
             if (GITHUB_TOKEN) {
                 localStorage.setItem('my_journal_token', GITHUB_TOKEN.trim());
             } else {
