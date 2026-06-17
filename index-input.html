@@ -215,7 +215,8 @@
                         reader.readAsDataURL(file);
                     });
 
-                    const uploadPath = `assets/art/${file.name}`;
+                    // Change this line in your script
+const uploadPath = `assets/art/${title.replace(/\s+/g, '_')}.png`;
                     const uploadUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${uploadPath}`;
 
                     await fetch(uploadUrl, {
@@ -236,6 +237,8 @@
                 let sha = fileData.sha;
                 let showcaseData = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, '')))));
 
+                // Add this line right before your const index = ...
+console.log("Updating ID:", selectedId);
                 // 3. Update the specific card
                 const index = showcaseData.findIndex(item => item.id === selectedId);
                 if (index > -1) {
