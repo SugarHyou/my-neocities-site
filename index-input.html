@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gyaru/o Style + Artist 𓆩♡𓆪 Bright Leopard Obsessed">
+    <title>SugarHyou ★</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/png" href="/assets/art/Leopard Heart (Apr 22, 2026).png">
+    <style>
+        .app-card {
+            gap: 10px;
+        }
+
+        label {
+            font-size: var(--large-font-size);
+            color: var(--dark-berry);
+            align-self: flex-start;
+        }
+
+        #tag,
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: var(--small-border) solid var(--hot-pink);
+            border-radius: var(--small-radius);
+            background: var(--white);
+            color: var(--dark-berry);
+            font-family: inherit;
+            font-size: var(--small-font-size);
+        }
+
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        #submit-btn {
+            background: var(--hot-pink);
+            color: var(--white);
+            border: none;
+            padding: 10px 15px;
+            border-radius: var(--standard-radius);
+            font-family: inherit;
+            font-size: var(--standard-font-size);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #submit-btn:hover {
+            background: var(--dark-berry);
+        }
+    </style>
+</head>
+
+<body>
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+    <div class="grid-container-2">
+        <main id="col-center">
+            <div class="double-box flex">
+                <h2 class="tab-title lang-text" data-en="new entry" data-jp="ホーム">new entry</h2>
+                <div class="leopard-layer flex column">
+                    <header></header>
+                    <div class="inner-box flex column">
+                        <div class="app-card flex column align-center">
+
+                            <label for="tag">Which card to update?</label>
+                            <select id="tag">
+                                <option value="video">Recent Video</option>
+                                <option value="art">Recent Art</option>
+                                <option value="game">Currently Playing</option>
+                                <option value="anime">Currently Watching</option>
+                            </select>
+
+                            <label for="media-url">Media URL (Link to image/video)</label>
+                            <input type="text" id="media-url" placeholder="/assets/art/your-art.png">
+
+                            <label for="title">Title</label>
+                            <input type="text" id="title">
+
+                            <label for="content">Description</label>
+                            <textarea id="content"></textarea>
+
+                            <button id="submit-btn" onclick="publishPost()">Publish to Feed</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <nav id="col-right">
+            <div id="nav-box" class="double-box flex">
+                <h2 class="tab-title lang-text" data-en="Menu" data-jp="メニュー">Menu</h2>
+                <div class="leopard-layer flex column">
+                    <div class="inner-box flex column">
+                        <div id="nav-links">
+                            <a href="/index.html" class="lang-text" data-en="🏠 Home" data-jp="🏠 ホーム">🏠 Home</a>
+                            <a href="/profile.html" class="lang-text" data-en="🎀 Profile" data-jp="🎀 プロフィール">🎀
+                                Profile</a>
+                            <a href="/art.html" class="lang-text" data-en="🎨 Art" data-jp="🎨 アート">🎨 Art</a>
+                            <a href="/journal.html" class="lang-text" data-en="📖 Journal" data-jp="📖 日記">📖
+                                Journal</a>
+                            <a href="https://sugarhyou.atabook.org/" class="lang-text" data-en="💌 Guestbook"
+                                data-jp="💌 ゲストブック">💌
+                                Guestbook</a>
+                            <a href="/neighbors.html" class="lang-text" data-en="💞 Neighbors" data-jp="💞 リンク集">💞
+                                Neighbors</a>
+                            <a href="/fanlistings.html" class="lang-text" data-en="🏷️ Fanlistings"
+                                data-jp="🏷️ ファンリスティング">🏷️
+                                Fanlistings</a>
+                        </div>
+
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <button id="prevMonth">◀</button>
+                                <h2 id="monthDisplay"></h2>
+                                <button id="nextMonth">▶</button>
+                            </div>
+                            <div class="calendar-grid" id="calendarGrid"></div>
+                        </div>
+
+                        <audio id="main-player"></audio>
+
+                        <div class="button-row flex">
+                            <button onclick="changeTrack(-1)" title="Backward">◀◀</button>
+                            <button id="play-pause-btn" onclick="togglePlay()" title="Play/Pause">▶</button>
+                            <button onclick="toggleLoop(this)" title="Loop" class="loop-btn">↻</button>
+                            <button onclick="changeTrack(1)" title="Forward">▶▶</button>
+                        </div>
+
+                        <div class="now-playing-text lang-text" data-en="♪ Select a track..." data-jp="♪ トラックを選択してね...">
+                            ♪ Select a
+                            track...</div>
+                        <ul class="song-list" id="js-playlist-output"></ul>
+
+                        <div class="lang-menu">
+                            <button id="lang-toggle" onclick="toggleLanguage()" style="width: 100%;">
+                                🇯🇵 Switch to JP
+                            </button>
+                        </div>
+
+                        <div class="settings-menu">
+                            <select id="theme-select" onchange="changeTheme(this.value)" style="width: 100%;">
+                                <option value="light">Default</option>
+                                <option value="blue">Blue</option>
+                                <option value="purple">Purple</option>
+                                <option value="tropical">Tropical</option>
+                                <option value="toy-pianos">Toy Pianos</option>
+                                <option value="dgrp">Danganronpa</option>
+                                <option value="flip">Flip</option>
+                            </select>
+                        </div>
+
+                        <div class="flex justify-center align-center">
+                            <img src="/assets/graphics/buttons/SugarHyou.gif">
+                        </div>
+                        <div class="flex align-center justify-center" style="gap: 10px;">
+                            <a href="https://www.instagram.com/sugarhyou/"><img
+                                    src="/assets/art/Instagram (Apr 26, 2026).png"></a>
+                            <a href="https://www.tiktok.com/@sugarhyou"><img
+                                    src="/assets/art/TikTok (Apr 26, 2026).png"></a>
+                            <a href="https://www.tumblr.com/blog/sugarhyou"><img
+                                    src="/assets/art/Tumblr (Apr 26, 2026).png"></a>
+                            <a href="https://www.youtube.com/@SugarHyou"><img
+                                    src="/assets/art/YouTube (Apr 26, 2026).png"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        const GITHUB_USERNAME = 'SugarHyou';
+        const REPO_NAME = 'my-neocities-site';
+        const FILE_PATH = 'index.json';
+
+        let GITHUB_TOKEN = localStorage.getItem('my_journal_token');
+
+        async function publishPost() {
+            const btn = document.getElementById('submit-btn');
+            const selectedId = document.getElementById('tag').value.toLowerCase();
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const media = document.getElementById('media-url').value;
+
+            if (!GITHUB_TOKEN) return alert("No token found!");
+
+            btn.innerText = "Updating... 💞";
+            btn.disabled = true;
+
+            try {
+                const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
+
+                // 1. Get current data
+                let res = await fetch(url, { headers: { 'Authorization': `token ${GITHUB_TOKEN}` } });
+                let fileData = await res.json();
+                let sha = fileData.sha;
+                let showcaseData = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, '')))));
+
+                // 2. Find and update the specific card
+                const index = showcaseData.findIndex(item => item.id === selectedId);
+                if (index > -1) {
+                    showcaseData[index].title = title;
+                    showcaseData[index].desc = content;
+                    showcaseData[index].media = media;
+                }
+
+                // 3. Save back to GitHub
+                let updateRes = await fetch(url, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: `📱 Updated ${selectedId} card`,
+                        content: btoa(unescape(encodeURIComponent(JSON.stringify(showcaseData, null, 2)))),
+                        sha: sha
+                    })
+                });
+
+                if (updateRes.status === 200) alert("Updated successfully! 🎀");
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            } finally {
+                btn.innerText = "✨ Publish to Feed ✨";
+                btn.disabled = false;
+            }
+        }
+    </script>
+    <script src="/script.js"></script>
+</body>
+
+</html>
