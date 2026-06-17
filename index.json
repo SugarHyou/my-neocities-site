@@ -2,10 +2,10 @@
   {
     "id": "video",
     "header": "RECENT VIDEO",
-    "media": "/assets/videos/",
+    "media": "/assets/art/4129.png",
     "isMediaVideo": true,
-    "title": "Title",
-    "desc": "Description",
+    "title": "Splatoon (Jun 17, 2026)",
+    "desc": "Test",
     "link": "/assets/videos/"
   },
   {
