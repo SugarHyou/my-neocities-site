@@ -158,7 +158,6 @@ window.addEventListener('DOMContentLoaded', () => {
             if (themeSelect) themeSelect.value = defaultSummerTheme;
         }
     }
-    checkReadStatus();
 });
 
 // ==========================================
@@ -372,4 +371,26 @@ function applyLanguage(lang) {
 document.addEventListener("DOMContentLoaded", () => {
   let savedLang = localStorage.getItem('site-lang') || 'en';
   applyLanguage(savedLang);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const chapterCards = document.querySelectorAll('.toc-chapter-card');
+  const articles = document.querySelectorAll('.manga-reading-page article');
+
+  chapterCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      chapterCards.forEach(c => c.classList.remove('active-chapter'));
+      articles.forEach(a => a.style.display = 'none');
+
+      card.classList.add('active-chapter');
+
+      const targetId = card.getAttribute('href').substring(1);
+      const targetArticle = document.getElementById(targetId);
+      if (targetArticle) {
+        targetArticle.style.display = 'block';
+      }
+    });
+  });
 });

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gyaru/o Style + Artist 𓆩♡𓆪 Bright Leopard Obsessed">
+    <title>SugarHyou ★</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/png" href="/assets/art/Leopard Heart (Apr 22, 2026).png">
+                                        <style>
+                                            #character-gallery img {
+                                                height: 100px;
+                                            }
+                                        </style>
+</head>
+
+<body>
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+    <div class="grid-container-2">
+
+        <main id="col-center">
+            <div class="double-box flex">
+                <h2 class="tab-title">Vol. 04</h2>
+                <div class="leopard-layer flex column">
+                    <header></header>
+                    <div class="inner-box flex column" style="gap: 20px;">
+                        <div class="manga-toc-container flex">
+                            <section class="flex column" style="gap: 10px; padding-right: 10px;">
+                                <h3 class="toc-header">CONTENTS</h3>
+                                <div class="flex column" style="gap: 10px;">
+                                    <a href="#ch1" class="toc-chapter-card active-chapter flex align-center">
+                                        <div class="ch-num">CH.<br>01</div>
+                                        <div class="ch-details flex column">
+                                            <span class="ch-title">Manba Style Makeup Tutorial</span>
+                                            <span class="ch-date">Jun 1, 2026</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </section>
+
+                            <section class="manga-reading-page">
+                                <article id="ch1" class="active-reading-content" style="display: block;">
+                                    <div class="stationery-title">
+                                        <h2>Chapter 1: ★ Manba Style Makeup Tutorial ★</h2>
+                                        <span class="page-date">Published: Jun 1, 2026</span>
+                                    </div>
+                                    <div class="page-body">
+                                        <img src="/assets/camera/May 10, 2026.jpg" style="height: 61px; float: left;">
+                                        <br>
+                                        <h3></h3>
+                                        <p></p>
+                                        
+                                    </div>
+                                </article>
+
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav id="col-right">
+            <div id="nav-box" class="double-box flex">
+                <h2 class="tab-title">Menu</h2>
+                <div class="leopard-layer flex column">
+                    <div class="inner-box flex column">
+                        <div id="nav-links">
+                            <a href="/index.html">🏠 Home</a>
+                            <a href="/profile.html">🎀 Profile</a>
+                            <a href="/art.html">🎨 Art</a>
+                            <a href="/journal.html">📖 Journal</a>
+                            <a href="https://sugarhyou.atabook.org/">💌 Guestbook</a>
+                            <a href="/neighbors.html">💞 Neighbors</a>
+                            <a href="/fanlistings.html">🏷️ Fanlistings</a>
+                        </div>
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <button id="prevMonth">◀</button>
+                                <h2 id="monthDisplay"></h2>
+                                <button id="nextMonth">▶</button>
+                            </div>
+                            <div class="calendar-grid" id="calendarGrid">
+                            </div>
+                        </div>
+                        <audio id="main-player">
+                        </audio>
+                        <div class="button-row flex">
+                            <button onclick="changeTrack(-1)" title="Backward">◀◀</button>
+                            <button id="play-pause-btn" onclick="togglePlay()" title="Play/Pause">▶</button>
+                            <button onclick="toggleLoop(this)" title="Loop" class="loop-btn">↻</button>
+                            <button onclick="changeTrack(1)" title="Forward">▶▶</button>
+                        </div>
+
+                        <div class="now-playing-text">♪ Select a track...</div>
+                        <ul class="song-list" id="js-playlist-output">
+                        </ul>
+
+                        <div class="settings-menu">
+                            <select id="theme-select" onchange="changeTheme(this.value)" style="width: 100%;">
+                                <option value="light">Default</option>
+                                <option value="blue">Blue</option>
+                                <option value="purple">Purple</option>
+                                <option value="tropical">Tropical</option>
+                                <option value="toy-pianos">Toy Pianos</option>
+                                <option value="flip">Flip</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-center align-center">
+                            <img src="/assets/graphics/buttons/SugarHyou.gif">
+                        </div>
+                        <div class="flex align-center justify-center" style="gap: 10px;">
+                            <a href="https://www.instagram.com/sugarhyou/">
+                                <img src="/assets/art/Instagram (Apr 26, 2026).png">
+                            </a>
+                            <a href="https://www.tiktok.com/@sugarhyou">
+                                <img src="/assets/art/TikTok (Apr 26, 2026).png">
+                            </a>
+                            <a href="https://www.tumblr.com/blog/sugarhyou">
+                                <img src="/assets/art/Tumblr (Apr 26, 2026).png">
+                            </a>
+                            <a href="https://www.youtube.com/@SugarHyou">
+                                <img src="/assets/art/YouTube (Apr 26, 2026).png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <script src="/script.js"></script>
+</body>
+
+</html>
