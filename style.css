@@ -536,6 +536,8 @@ a:hover {
 }
 
 .event-ticker {
+  position: relative;
+  z-index: 10;
   border: var(--standard-border) solid var(--dark-berry);
   background: var(--pale-pink);
 }
@@ -636,12 +638,12 @@ a:hover {
 }
 
 .vol-blue .book-card {
-  box-shadow: 4px -4px 0px turquoise;
-  background: linear-gradient(to bottom, #ffffff, turquoise);
+  box-shadow: 4px -4px 0px #40e0b3;
+  background: linear-gradient(to bottom, #ffffff, #40e0b3);
 }
 
 .vol-blue .vol-badge {
-  background: turquoise;
+  background: #40e0b3;
 }
 
 .vol-purple .book-card {
@@ -1003,7 +1005,7 @@ border-color: transparent var(--white) transparent transparent;
 }
 
 [data-theme="tropical"] {
-  --dark-berry: turquoise;
+  --dark-berry: #40e0b3;
   --hot-pink: rgb(255, 92, 92);
   --pale-pink: rgb(255, 247, 224);
   --bg-img: url('/assets/graphics/backgrounds/beach.gif');
@@ -1018,7 +1020,7 @@ border-color: transparent var(--white) transparent transparent;
 [data-theme="tropical"] .song-list li:hover,
 [data-theme="tropical"] .button-row button:hover,
 [data-theme="tropical"] .button-row button.loop-active {
-  background: turquoise;
+  background: #40e0b3;
 }
 
 [data-theme="toy-pianos"] {

@@ -14,7 +14,20 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@500&family=Yusei+Magic&family=Dela+Gothic+One&display=swap"
     rel="stylesheet">
+<style>.top-layout-wrapper {
+    position: relative;
+    min-height: 380px; /* Adjust this to match the height of your photo */
+    margin-bottom: 10px;
+}
 
+.profile-photo-clip {
+    position: absolute;
+    right: 0px; 
+    bottom: -70px;
+    height: 490px; /* Set a fixed height */
+    pointer-events: none;
+}
+</style>
   <link rel="stylesheet" href="/style.css">
 </head>
 
@@ -44,7 +57,23 @@
                     <div class="value lang-text" data-en="October 14" data-jp="10月14日">October 14</div>
                   </div>
                 </div>
-                <p class="lang-text"
+                
+                <div class="tag-row flex wrap" style="margin-top: 10px;">
+                  <span class="tag">#ALT</span>
+                  <span class="tag">#ARTIST</span>
+                  <span class="tag">#EUROBEATLOVER</span>
+                  <span class="tag">#FASHIONSTUDENT</span>
+                  <span class="tag">#GYARU</span>
+                  <span class="tag">#JPOP</span>
+                  <span class="tag">#LEOPARDPRINT</span>
+                  <span class="tag">#Y2K</span>
+                </div>
+
+               <div class="top-layout-wrapper">
+    <div class="top-layout-container flex" style="align-items: flex-start; gap: 15px;">
+        <div class="flex column" style="flex: 1; gap: 10px; margin-right: 260px;">
+            <div class="speech-bubble right">
+              <p class="lang-text"
                   data-en="I'm an American artist obsessed with bright leopard prints and various alternative fashion!"
                   data-jp="ド派手なヒョウ柄といろんなお姉系・ガル系のオルタナティブ・ファッションに大ハマリ中のアメリカ人アーティストです！">
                   I'm an American artist obsessed with bright leopard prints and various alternative fashion!
@@ -55,16 +84,23 @@
                   I'm currently registered in a cross-county College for a Fashion Design & Technologies Associates
                   Degree. It's my dream to become a costume specialist for raves and/or theaters!
                 </p>
-                <div class="tag-row flex wrap" style="margin-bottom: 10px;">
-                  <span class="tag">#ALT</span>
-                  <span class="tag">#ARTIST</span>
-                  <span class="tag">#EUROBEATLOVER</span>
-                  <span class="tag">#FASHIONSTUDENT</span>
-                  <span class="tag">#GYARU</span>
-                  <span class="tag">#JPOP</span>
-                  <span class="tag">#LEOPARDPRINT</span>
-                  <span class="tag">#Y2K</span>
-                </div>
+            </div>
+            <div class="flex" style="gap: 10px;">
+    <div class="obsessions-card" id="latest-post" style="flex: 1;">
+        <div id="latest-post-content">Loading...</div>
+    </div>
+    
+    <div class="obsessions-card" style="flex: 1; padding: 15px; cursor: pointer;" onclick="toggleMood()">
+        <h4>☁️ CURRENT MOOD</h4>
+        <div id="mood-text" style="text-align: center; font-size: 1.5em; padding-top: 10px;">
+            ✨ Excitable!
+        </div>
+    </div>
+</div>
+        </div>
+        <img src="/assets/camera/Jun 16, 2026 (2).png" class="profile-photo-clip">
+    </div>
+</div>
 
                 <div class="event-ticker flex">
                   <div class="event-tab lang-text" data-en="NEXT EVENT" data-jp="次のイベント">NEXT EVENT</div>
@@ -176,15 +212,52 @@
       </div>
     </nav>
   </div>
-  <script>async function loadShowcase() {
-    const res = await fetch('/index.json');
-    const data = await res.json();
-    const container = document.getElementById('showcase-container');
-    
-    container.innerHTML = data.map(card => `
+  <script>
+    async function fetchLatestPost() {
+    try {
+        const res = await fetch('/journal.json');
+        const posts = await res.json();
+        const latest = posts[0]; // This is your latest post
+        const container = document.getElementById('latest-post-content');
+
+        // We use the same structure as your journal page. 
+        // The CSS will now style this automatically.
+        container.innerHTML = `
+            <article class="post-card" style="margin: 0;">
+                <div class="post-header" style="display: flex; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <img src="/assets/pfp.png" class="pfp" alt="PFP">
+                        <div class="post-meta">
+                            <span class="username">SugarHyou</span>
+                            <span class="date">${latest.date}</span>
+                        </div>
+                    </div>
+                    <span class="entry-tag ${latest.tag.toLowerCase()}" style="margin-left: auto;">
+                        ${latest.icon} ${latest.tag}
+                    </span>
+                </div>
+                ${latest.title ? `<h2 class="post-title">${latest.title}</h2>` : ''}
+                <div class="post-content">
+                    <p>${latest.content}</p>
+                </div>
+            </article>
+        `;
+    } catch (e) {
+        console.error("Could not load latest post:", e);
+        document.getElementById('latest-post-content').innerHTML = "Couldn't load entry.";
+    }
+}
+fetchLatestPost();
+  
+  async function loadShowcase() {
+      const res = await fetch('/index.json');
+      const data = await res.json();
+      const container = document.getElementById('showcase-container');
+
+      container.innerHTML = data.map(card => `
         <div class="showcase-card">
             <div class="card-header">${card.header}</div>
-            ${card.isMediaVideo ? `<video src="${card.media}" class="card-img" controls></video>` : `<img src="${card.media}" class="card-img">`}
+            <img src="${card.media}" class="card-img">
             <div class="card-content">
                 <span class="card-title">${card.title}</span>
                 <p class="card-desc">${card.desc}</p>
@@ -192,8 +265,8 @@
             </div>
         </div>
     `).join('');
-}
-loadShowcase();</script>
+    }
+    loadShowcase();</script>
   <script src="/script.js"></script>
 </body>
 

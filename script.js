@@ -24,21 +24,16 @@ const statusText = document.querySelector('.now-playing-text');
 const playBtn = document.getElementById('play-pause-btn');
 
 const playlist = [
-    { file: "/assets/audio/music/BANG BANG.mp3", name: "★ BANG BANG"},
-    { file: '/assets/audio/music/Blood Sweat & Tears.mp3', name: '★ Blood Sweat & Tears' },
-    { file: '/assets/audio/music/Catch Catch.mp3', name: '★ Catch Catch' },
+    { file: '/assets/audio/music/Another Night.mp3', name: '★ Another Night' },
     { file: '/assets/audio/music/チョベリグLucky♡Day.mp3', name: '★ チョベリグLucky♡Day' },
     { file: '/assets/audio/music/CYBER DANCE.mp3', name: '★ CYBER DANCE' },
-    { file: '/assets/audio/music/Drunk-Dazed.mp3', name: '★ Drunk-Dazed' },
-    { file: '/assets/audio/music/ELECTRIC WEEKEND ZONE ft. KAITO.mp3', name: '★ ELECTRIC WEEKEND ZONE ft. KAITO' },
-    { file: '/assets/audio/music/How It’s Done.mp3', name: '★ How It’s Done' },
     { file: '/assets/audio/music/내가 제일 잘 나가.mp3', name: '★ 내가 제일 잘 나가' },
-    { file: '/assets/audio/music/INTERNET OVERDOSE.mp3', name: '★ INTERNET OVERDOSE' },
+    { file: '/assets/audio/music/IKE IKE.mp3', name: '★ IKE IKE' },
     { file: '/assets/audio/music/Love Invasion.mp3', name: '★ Love Invasion' },
     { file: '/assets/audio/music/NIGHT OF FIRE.mp3', name: '★ NIGHT OF FIRE' },
     { file: '/assets/audio/music/ONE NIGHT IN ARABIA.mp3', name: '★ ONE NIGHT IN ARABIA' },
-    { file: '/assets/audio/music/Pied Piper.mp3', name: '★ Pied Piper' },
     { file: '/assets/audio/music/ルカルカ★ナイトフィーバー 巡音ルカ.mp3', name: '★ ルカルカ★ナイトフィーバー 巡音ルカ' },
+    { file: '/assets/audio/music/Velfarre 2000.mp3', name: '★ Velfarre 2000' },
 ];
 
 let currentTrackIndex = localStorage.getItem('lastTrack') ? parseInt(localStorage.getItem('lastTrack')) : 0;

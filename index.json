@@ -1,27 +1,16 @@
 [
   {
-    "id": "video",
-    "header": "RECENT VIDEO",
-    "media": "/assets/art/4129.png",
-    "isMediaVideo": true,
-    "title": "Splatoon (Jun 17, 2026)",
-    "desc": "Test",
-    "link": "/assets/videos/"
-  },
-  {
     "id": "art",
     "header": "RECENT ART",
-    "media": "/assets/art/4129.png",
-    "isMediaVideo": false,
+    "media": "/assets/art/Splatoon (Jun 17, 2026).png",
     "title": "Splatoon (Jun 17, 2026)",
     "desc": "Test",
-    "link": "/assets/art/"
+    "link": "/art.html"
   },
   {
     "id": "game",
     "header": "CURRENTLY PLAYING",
     "media": "https://",
-    "isMediaVideo": false,
     "title": "Title",
     "desc": "Description",
     "link": "https://"
@@ -30,9 +19,8 @@
     "id": "anime",
     "header": "CURRENTLY WATCHING",
     "media": "https://i.ytimg.com/vi/oyNvk3yr9go/hq720.jpg",
-    "isMediaVideo": false,
     "title": "Gals Can't Be Kind to Otaku!?",
     "desc": "Takuya Seo is a quiet otaku who keeps a low profile at school—until two gals from his class start talking to him!",
-    "link": "https://"
+    "link": "https://theindex.moe/library/anime"
   }
 ]
