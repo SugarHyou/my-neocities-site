@@ -227,7 +227,7 @@
   <script>
     async function fetchLatestPost() {
       try {
-        const res = await fetch('/journal.json');
+        const res = await fetch('/output/journal.json');
         const posts = await res.json();
         const latest = posts[0]; // This is your latest post
         const container = document.getElementById('latest-post-content');
@@ -260,7 +260,7 @@
     fetchLatestPost();
 
     async function loadShowcase() {
-      const res = await fetch('/index.json');
+      const res = await fetch('/output/index.json');
       const data = await res.json();
       const container = document.getElementById('showcase-container');
 

@@ -27,7 +27,6 @@ const playlist = [
     { file: '/assets/audio/music/Another Night.mp3', name: '★ Another Night' },
     { file: '/assets/audio/music/チョベリグLucky♡Day.mp3', name: '★ チョベリグLucky♡Day' },
     { file: '/assets/audio/music/CYBER DANCE.mp3', name: '★ CYBER DANCE' },
-    { file: '/assets/audio/music/내가 제일 잘 나가.mp3', name: '★ 내가 제일 잘 나가' },
     { file: '/assets/audio/music/IKE IKE.mp3', name: '★ IKE IKE' },
     { file: '/assets/audio/music/Love Invasion.mp3', name: '★ Love Invasion' },
     { file: '/assets/audio/music/NIGHT OF FIRE.mp3', name: '★ NIGHT OF FIRE' },
@@ -38,7 +37,6 @@ const playlist = [
 
 let currentTrackIndex = localStorage.getItem('lastTrack') ? parseInt(localStorage.getItem('lastTrack')) : 0;
 
-// SAFEGUARD: Only run playlist construction if element exists on page
 if (listOutput) {
     playlist.forEach((track, index) => {
         const li = document.createElement('li');
@@ -160,8 +158,6 @@ window.addEventListener('DOMContentLoaded', () => {
             if (themeSelect) themeSelect.value = defaultSummerTheme;
         }
     }
-    
-    // This call works safely now!
     checkReadStatus();
 });
 
@@ -321,7 +317,6 @@ function renderCalendar() {
     }
 }
 
-// Calendar Navigation Setup Checks
 const prevBtn = document.getElementById('prevMonth');
 const nextBtn = document.getElementById('nextMonth');
 
@@ -348,79 +343,17 @@ renderCalendar();
 // ==========================================
 // 📖 MANGA VOLUME CHAPTER READER ENGINE (PER-PAGE STORAGE)
 // ==========================================
-function checkReadStatus() {
-    const chapterCards = document.querySelectorAll('.toc-chapter-card');
-    if (chapterCards.length === 0) return; // Exit if not on a sub-volume page
-
-    // Create a unique key for this specific URL path (e.g., "lastReadChapter_/journal/events.html")
-    const storageKey = 'lastReadChapter_' + window.location.pathname;
-
-    // 1. LOAD: Check for a saved chapter specific to this page
-    const savedChapter = localStorage.getItem(storageKey);
-
-    chapterCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-            e.preventDefault(); // Stop the page from jump-scrolling down to the ID
-
-            // Remove active style from previous chapters
-            chapterCards.forEach(c => c.classList.remove('active-chapter'));
-            
-            // Highlight clicked chapter
-            this.classList.add('active-chapter');
-
-            // Hide all text bodies inside reading window
-            const readings = document.querySelectorAll('.manga-reading-page article');
-            readings.forEach(article => {
-                article.style.display = 'none';
-                article.classList.remove('active-reading-content');
-            });
-
-            // Target the linked ID (e.g., #ch1) and make it viewable
-            const targetId = this.getAttribute('href');
-            const targetArticle = document.querySelector(targetId);
-            if (targetArticle) {
-                targetArticle.style.display = 'block';
-                targetArticle.classList.add('active-reading-content');
-            }
-
-            // 2. SAVE: Store using our new unique page-specific key
-            if (targetId) {
-                localStorage.setItem(storageKey, targetId);
-            }
-        });
-    });
-
-    // 3. APPLY: If a saved chapter exists for THIS page, click it
-    if (savedChapter) {
-        const activeCard = document.querySelector(`.toc-chapter-card[href="${savedChapter}"]`);
-        if (activeCard) {
-            activeCard.click();
-        }
-    } else {
-        // If no history exists for this specific page, default to the first chapter card
-        if (chapterCards[0]) {
-            chapterCards[0].click();
-        }
-    }
-}
 
 function toggleLanguage() {
-  // Check what the current language is, default to English ('en')
   let currentLang = localStorage.getItem('site-lang') || 'en';
   let newLang = currentLang === 'en' ? 'jp' : 'en';
-  
-  // Save the selection for next time
   localStorage.setItem('site-lang', newLang);
-  
-  // Apply the translations across the page
   applyLanguage(newLang);
 }
 
 function applyLanguage(lang) {
   const elements = document.querySelectorAll('.lang-text');
   const toggleBtn = document.getElementById('lang-toggle');
-  
-  // Loop through all tagged elements and swap text based on data attributes
   elements.forEach(el => {
     if (lang === 'jp') {
       if (el.getAttribute('data-jp')) el.textContent = el.getAttribute('data-jp');
@@ -429,16 +362,13 @@ function applyLanguage(lang) {
     }
   });
 
-  // Update the button appearance
   if (toggleBtn) {
     toggleBtn.textContent = lang === 'en' ? '🇯🇵 Switch to JP' : '🇺🇸 Switch to EN';
   }
   
-  // Optional: Update the HTML tag lang attribute for SEO/accessibility
   document.documentElement.lang = lang;
 }
 
-// Run this automatically when the page loads so it remembers their choice!
 document.addEventListener("DOMContentLoaded", () => {
   let savedLang = localStorage.getItem('site-lang') || 'en';
   applyLanguage(savedLang);
