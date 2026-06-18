@@ -14,20 +14,21 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@500&family=Yusei+Magic&family=Dela+Gothic+One&display=swap"
     rel="stylesheet">
-<style>.top-layout-wrapper {
-    position: relative;
-    min-height: 380px; /* Adjust this to match the height of your photo */
-    margin-bottom: 10px;
-}
+  <style>
+    .top-layout-wrapper {
+      position: relative;
+      margin-bottom: 10px;
+    }
 
-.profile-photo-clip {
-    position: absolute;
-    right: 0px; 
-    bottom: -70px;
-    height: 490px; /* Set a fixed height */
-    pointer-events: none;
-}
-</style>
+    .profile-photo-clip {
+      position: absolute;
+      right: 0px;
+      bottom: -120px;
+      height: 490px;
+      /* Set a fixed height */
+      pointer-events: none;
+    }
+  </style>
   <link rel="stylesheet" href="/style.css">
 </head>
 
@@ -57,7 +58,7 @@
                     <div class="value lang-text" data-en="October 14" data-jp="10月14日">October 14</div>
                   </div>
                 </div>
-                
+
                 <div class="tag-row flex wrap" style="margin-top: 10px;">
                   <span class="tag">#ALT</span>
                   <span class="tag">#ARTIST</span>
@@ -69,38 +70,49 @@
                   <span class="tag">#Y2K</span>
                 </div>
 
-               <div class="top-layout-wrapper">
-    <div class="top-layout-container flex" style="align-items: flex-start; gap: 15px;">
-        <div class="flex column" style="flex: 1; gap: 10px; margin-right: 260px;">
-            <div class="speech-bubble right">
-              <p class="lang-text"
-                  data-en="I'm an American artist obsessed with bright leopard prints and various alternative fashion!"
-                  data-jp="ド派手なヒョウ柄といろんなお姉系・ガル系のオルタナティブ・ファッションに大ハマリ中のアメリカ人アーティストです！">
-                  I'm an American artist obsessed with bright leopard prints and various alternative fashion!
-                </p>
-                <p class="lang-text"
-                  data-en="I'm currently registered in a cross-county College for a Fashion Design & Technologies Associates Degree. It's my dream to become a costume specialist for raves and/or theaters!"
-                  data-jp="現在は地域の大学でファッションデザイン＆テクノロジーの準学士号の取得に向けて勉強中♪ 将来の夢は、レイブや舞台演劇の衣装スペシャリストになることです！">
-                  I'm currently registered in a cross-county College for a Fashion Design & Technologies Associates
-                  Degree. It's my dream to become a costume specialist for raves and/or theaters!
-                </p>
-            </div>
-            <div class="flex" style="gap: 10px;">
-    <div class="obsessions-card" id="latest-post" style="flex: 1;">
-        <div id="latest-post-content">Loading...</div>
-    </div>
-    
-    <div class="obsessions-card" style="flex: 1; padding: 15px; cursor: pointer;" onclick="toggleMood()">
-        <h4>☁️ CURRENT MOOD</h4>
-        <div id="mood-text" style="text-align: center; font-size: 1.5em; padding-top: 10px;">
-            ✨ Excitable!
-        </div>
-    </div>
-</div>
-        </div>
-        <img src="/assets/camera/Jun 16, 2026 (2).png" class="profile-photo-clip">
-    </div>
-</div>
+                <div class="top-layout-wrapper">
+                  <div class="top-layout-container flex" style="align-items: flex-start; gap: 15px;">
+                    <div class="flex column" style="flex: 1; gap: 10px; margin-right: 260px;">
+                      <div class="speech-bubble right">
+                        <p class="lang-text"
+                          data-en="I'm an American artist obsessed with bright leopard prints and various alternative fashion!"
+                          data-jp="ド派手なヒョウ柄といろんなお姉系・ガル系のオルタナティブ・ファッションに大ハマリ中のアメリカ人アーティストです！">
+                          I'm an American artist obsessed with bright leopard prints and various alternative fashion!
+                        </p>
+                        <p class="lang-text"
+                          data-en="I'm currently registered in a cross-county College for a Fashion Design & Technologies Associates Degree. It's my dream to become a costume specialist for raves and/or theaters!"
+                          data-jp="現在は地域の大学でファッションデザイン＆テクノロジーの準学士号の取得に向けて勉強中♪ 将来の夢は、レイブや舞台演劇の衣装スペシャリストになることです！">
+                          I'm currently registered in a cross-county College for a Fashion Design & Technologies
+                          Associates
+                          Degree. It's my dream to become a costume specialist for raves and/or theaters!
+                        </p>
+                      </div>
+                      <div class="flex" style="gap: 10px;">
+                        <div id="latest-post-content" style="flex: 1;">Loading...</div>
+
+                        <div class="obsessions-card" style="flex: 1; padding: 10px;">
+                          <img src="/assets/graphics/userbars/SugarHyou.png">
+                          <ul style="list-style: none; padding: 0;">
+                            <li style="border-bottom: 1px dashed var(--hot-pink); padding: 5px 0;">
+                              <input type="checkbox" checked disabled> Peaches
+                            </li>
+                            <li style="border-bottom: 1px dashed var(--hot-pink); padding: 5px 0;">
+                              <input type="checkbox" checked disabled> Peanut Butter & Jelly Sandwich
+                            </li>
+                            <li style="border-bottom: 1px dashed var(--hot-pink); padding: 5px 0;">
+                              <input type="checkbox" checked disabled> Teriyaki Bowl
+                            </li>
+                            <li style="border-bottom: 1px dashed var(--hot-pink); padding: 5px 0;">
+                              <input type="checkbox" checked disabled> Ritz Crackers
+                            </li>
+                          </ul>
+                          <p>I'm definitely a "safe food" kind of person...</p>
+                        </div>
+                      </div>
+                    </div>
+                    <img src="/assets/camera/Jun 16, 2026 (2).png" class="profile-photo-clip">
+                  </div>
+                </div>
 
                 <div class="event-ticker flex">
                   <div class="event-tab lang-text" data-en="NEXT EVENT" data-jp="次のイベント">NEXT EVENT</div>
@@ -214,14 +226,14 @@
   </div>
   <script>
     async function fetchLatestPost() {
-    try {
+      try {
         const res = await fetch('/journal.json');
         const posts = await res.json();
         const latest = posts[0]; // This is your latest post
         const container = document.getElementById('latest-post-content');
 
         container.innerHTML = `
-            <article class="post-card" style="margin: 0;">
+            <article class="post-card" style="width: 100%; margin: 0;">
                 <div class="post-header" style="display: flex; align-items: center;">
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <img src="/assets/pfp.png" class="pfp" alt="PFP">
@@ -240,14 +252,14 @@
                 </div>
             </article>
         `;
-    } catch (e) {
+      } catch (e) {
         console.error("Could not load latest post:", e);
         document.getElementById('latest-post-content').innerHTML = "Couldn't load entry.";
+      }
     }
-}
-fetchLatestPost();
-  
-  async function loadShowcase() {
+    fetchLatestPost();
+
+    async function loadShowcase() {
       const res = await fetch('/index.json');
       const data = await res.json();
       const container = document.getElementById('showcase-container');
