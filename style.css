@@ -680,7 +680,8 @@ p:last-child {
   color: var(--white);
 }
 
-.entry-tag .personal {
+.personal {
+  text-align: center;
   background: var(--hot-pink);
 }
 
