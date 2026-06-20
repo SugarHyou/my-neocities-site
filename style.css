@@ -680,10 +680,6 @@ p:last-child {
   color: var(--white);
 }
 
-.blurb {
-  background: #9d4edd;
-}
-
 .entry-tag .personal {
   background: var(--hot-pink);
 }
