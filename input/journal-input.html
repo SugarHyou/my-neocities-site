@@ -165,7 +165,7 @@ textarea {
             if (GITHUB_TOKEN) {
                 localStorage.setItem('my_journal_token', GITHUB_TOKEN.trim());
             } else {
-                alert("Dashboard locked. You won't be able to publish without a token!");
+                alert("Dashboard locked. You won't be able to publish without a dollar!");
             }
         }
 
@@ -176,7 +176,7 @@ textarea {
             const content = document.getElementById('content').value;
 
             if (!GITHUB_TOKEN) {
-                return alert("No token found! Please refresh the page to enter it.");
+                return alert("No dollar found! Please refresh the page to enter it.");
             }
             if (!content) return alert("You didn't type anything!");
 
@@ -214,7 +214,7 @@ textarea {
                     currentPosts = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, '')))));
                 } else if (res.status === 401 || res.status === 403) {
                     localStorage.removeItem('my_journal_token');
-                    return alert("Invalid Token! The app local memory has reset. Please refresh and try entering your token again.");
+                    return alert("Invalid Dollar! The app local memory has reset. Please refresh and try entering your dollar again.");
                 } else if (res.status !== 404) {
                     return alert(`GitHub Read Error Status: ${res.status}`);
                 }
@@ -246,7 +246,7 @@ textarea {
                 console.error(error);
                 alert(`App Error: ${error.message}`);
             } finally {
-                btn.innerText = "✨ Publish to Feed ✨";
+                btn.innerText = "Publish to Feed";
                 btn.disabled = false;
             }
         }
