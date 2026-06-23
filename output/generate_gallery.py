@@ -2,8 +2,9 @@ import os
 import re
 from datetime import datetime
 
-ART_DIR = "/assets/art"
-HTML_FILE = "/art.html"
+# Change these lines at the top of your script:
+ART_DIR = "../assets/art"
+HTML_FILE = "../art.html"
 
 if not os.path.exists(ART_DIR):
     print(f"❌ Error: Could not find directory '{ART_DIR}'")
@@ -51,20 +52,22 @@ if not os.path.exists(HTML_FILE):
 with open(HTML_FILE, "r", encoding="utf-8") as f:
     content = f.read()
 
-target_start = '<div id="gallery-grid" class="flex wrap justify-center art-gallery-grid" style="gap: 20px;">'
-target_end = "</div>"
+# Change the target variables to match the markers you just added
+target_start = ''
+target_end = ''
 
-if target_start in content:
-    parts = content.split(target_start, 1)
-    top_half = parts[0]
+if target_start in content and target_end in content:
+    # Get everything before the start marker
+    top_half = content.split(target_start, 1)[0] + target_start
+    # Get everything after the end marker
+    bottom_half = content.split(target_end, 1)[1]
 
-    bottom_half = parts[1].split(target_end, 1)[1]
-
-    updated_content = f"{top_half}{target_start}\n{gallery_block}\n                            {target_end}{bottom_half}"
-
+    # Combine them with your new gallery_block in the middle
+    updated_content = f"{top_half}\n{gallery_block}\n{bottom_half}"
+    
     with open(HTML_FILE, "w", encoding="utf-8") as f:
         f.write(updated_content)
-    print("⚡ SugarHyou Gallery Automated! Grid updated successfully without breaking the template. ✨")
+    print("⚡ SugarHyou Gallery Automated! ✨")
 else:
     print(
         '❌ Error: Could not find the exact <div id="gallery-grid"...> tag in your art.html file.'
