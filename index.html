@@ -74,7 +74,7 @@
                   <div class="top-layout-container flex" style="align-items: flex-start; gap: 15px;">
                     <div class="flex column" style="flex: 1; gap: 10px; margin-right: 260px;">
                       <div class="speech-bubble right">
-                       <marquee behavior="alternate">Welcome to SugarHyou!</marquee>
+                        <marquee behavior="alternate">Welcome to SugarHyou!</marquee>
                         <p class="lang-text"
                           data-en="I'm an American artist obsessed with bright leopard prints and various alternative fashion!"
                           data-jp="ド派手なヒョウ柄といろんなお姉系・ガル系のオルタナティブ・ファッションに大ハマリ中のアメリカ人アーティストです！">
@@ -115,40 +115,7 @@
                   </div>
                 </div>
 
-                <div class="event-ticker flex">
-                  <div class="event-tab lang-text" data-en="NEXT EVENT" data-jp="次のイベント">NEXT EVENT</div>
-                  <div class="event-main flex">
-                    <img src="https://www.laconventioncenter.com/assets/img/anime-expo-2026-main-c91ad3dea7.jpg"
-                      style="max-height: 115px;">
-                    <div class="event-details">
-                      <div class="event-name flex row align-center" style="justify-content: space-between;"><a
-                          href="https://www.anime-expo.org/" style="font-size: var(--extra-large-font-size);">★ Anime
-                          Expo ★</a>
-                        <p class="lang-text" data-en="🕒 9:00 AM | 📍 Los Angeles Convention Center"
-                          data-jp="🕒 午前 9:00 | 📍 ロサンゼルス・コンベンションセンター"
-                          style="font-size: var(--small-font-size); margin-bottom: 10px;">🕒 9:00 AM | 📍 Los Angeles
-                          Convention Center</p>
-                      </div>
-                      <br>
-                      <div class="flex" style="gap: 10px;">
-                        <div class="event-date-box flex column justify-center align-center">
-                          <span class="event-month lang-text" data-en="JuL" data-jp="7月">JuL</span>
-                          <span class="event-day-num">2</span>
-                        </div>
-                        <span class="lang-text"
-                          data-en="Anime Expo is the largest celebration of Japanese pop culture in North America! Join us in downtown Los Angeles on July 2-5, 2026!"
-                          data-jp="アニメエキスポは北米最大の日本ポップカルチャーの祭典です！2026年7月2日〜5日にLAのダウンタウンで盛り上がろう！">
-                          Anime Expo is the largest celebration of Japanese pop culture in North America! Join us in
-                          downtown Los Angeles on July 2-5, 2026!
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="barcode-area flex column justify-center">
-                    <div class="barcode-lines"></div>
-                    <div class="barcode-number">1014-2026-SUGAR</div>
-                  </div>
-                </div>
+                <div id="event-ticker-container">Loading event...</div>
               </div>
             </div>
 
@@ -231,6 +198,43 @@
     </nav>
   </div>
   <script>
+    async function loadEventTicker() {
+      try {
+        const res = await fetch('/output/event.json');
+        const data = await res.json();
+        const container = document.getElementById('event-ticker-container');
+
+        container.innerHTML = `
+      <div class="event-ticker flex">
+        <div class="event-tab lang-text">NEXT EVENT</div>
+        <div class="event-main flex">
+          <img src="${data.image}" style="max-height: 115px;">
+          <div class="event-details">
+            <div class="event-name flex row align-center" style="justify-content: space-between;">
+              <a href="${data.link}" style="font-size: var(--extra-large-font-size);">${data.name}</a>
+              <p style="font-size: var(--small-font-size); margin-bottom: 10px;">${data.time}</p>
+            </div>
+            <br>
+            <div class="flex" style="gap: 10px;">
+              <div class="event-date-box flex column justify-center align-center">
+                <span class="event-month">${data.month}</span>
+                <span class="event-day-num">${data.day}</span>
+              </div>
+              <span>${data.desc}</span>
+            </div>
+          </div>
+        </div>
+        <div class="barcode-area flex column justify-center">
+          <div class="barcode-lines"></div>
+          <div class="barcode-number">${data.barcode}</div>
+        </div>
+      </div>
+    `;
+      } catch (e) {
+        console.error("Could not load event:", e);
+      }
+    }
+    loadEventTicker();
     async function fetchLatestPost() {
       try {
         const res = await fetch('/output/journal.json');
@@ -248,9 +252,6 @@
                             <span class="date">${latest.date}</span>
                         </div>
                     </div>
-                    <span class="entry-tag ${latest.tag.toLowerCase()}" style="margin-left: auto;">
-                        ${latest.icon} ${latest.tag}
-                    </span>
                 </div>
                 ${latest.title ? `<h2 class="post-title">${latest.title}</h2>` : ''}
                 <div class="post-content">
@@ -273,7 +274,7 @@
       container.innerHTML = data.map(card => `
         <div class="showcase-card">
             <div class="card-header">${card.header}</div>
-            <img src="${card.media}" class="card-img">
+            <img src="${card.image}" class="card-img">
             <div class="card-content">
                 <span class="card-title">${card.title}</span>
                 <p class="card-desc">${card.desc}</p>
@@ -282,7 +283,8 @@
         </div>
     `).join('');
     }
-    loadShowcase();</script>
+    loadShowcase();
+  </script>
   <script src="/script.js"></script>
 </body>
 

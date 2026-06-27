@@ -68,6 +68,7 @@
 
                             <label for="tag">Which card to update?</label>
                             <select id="tag">
+                                <option value="event">Upcoming Event</option>
                                 <option value="art">Recent Art</option>
                                 <option value="game">Currently Playing</option>
                                 <option value="anime">Currently Watching</option>
@@ -198,14 +199,15 @@
             const content = document.getElementById('content').value;
 
             if (!GITHUB_TOKEN) return alert("No token found!");
-            if (!title) return alert("Please enter a title for your art!");
+            if (!title) return alert("Please enter a title!");
 
             btn.innerText = "Processing... 🎀";
             btn.disabled = true;
 
             try {
-                let mediaUrl = urlInput.value;
+                let imageUrl = urlInput.value;
 
+                // Image upload logic
                 if (fileInput.files.length > 0) {
                     const file = fileInput.files[0];
                     const base64Content = await new Promise((resolve) => {
@@ -213,41 +215,50 @@
                         reader.onloadend = () => resolve(reader.result.split(',')[1]);
                         reader.readAsDataURL(file);
                     });
-
                     const uploadPath = `assets/art/${title.replace(/\s+/g, '_')}.png`;
                     const uploadUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${uploadPath}`;
-
                     await fetch(uploadUrl, {
                         method: 'PUT',
                         headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            message: `Uploaded ${file.name}`,
-                            content: base64Content
-                        })
+                        body: JSON.stringify({ message: `Uploaded ${file.name}`, content: base64Content })
                     });
-                    mediaUrl = `/${uploadPath}`;
+                    imageUrl = `/${uploadPath}`;
                 }
 
-                const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
+                const isEvent = selectedId === 'event';
+                const targetPath = isEvent ? 'output/event.json' : 'output/index.json';
+                const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${targetPath}`;
+
                 let res = await fetch(url, { headers: { 'Authorization': `token ${GITHUB_TOKEN}` } });
                 let fileData = await res.json();
                 let sha = fileData.sha;
-                let showcaseData = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, '')))));
+                // Inside publishPost, after fetching the file:
+                let data = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, '')))));
 
-                console.log("Updating ID:", selectedId);
-                const index = showcaseData.findIndex(item => item.id === selectedId);
-                if (index > -1) {
-                    showcaseData[index].title = title;
-                    showcaseData[index].desc = content;
-                    if (mediaUrl) showcaseData[index].media = mediaUrl;
+                if (isEvent) {
+                    // Treat as an object
+                    data.title = title;
+                    data.desc = content;
+                    if (imageUrl) data.image = imageUrl; // Ensure this matches your frontend key!
+                } else {
+                    // Treat as an array
+                    const index = data.findIndex(item => item.id === selectedId);
+                    if (index > -1) {
+                        data[index].title = title;
+                        data[index].desc = content;
+                        if (imageUrl) data[index].media = imageUrl; // Changed to match your JSON 'media' key
+                    }
                 }
+
+                // Add this right before the final await fetch(url, { method: 'PUT', ... })
+console.log("Data being sent to GitHub:", JSON.stringify(data, null, 2));
 
                 await fetch(url, {
                     method: 'PUT',
                     headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        message: `📱 Updated ${selectedId} card`,
-                        content: btoa(unescape(encodeURIComponent(JSON.stringify(showcaseData, null, 2)))),
+                        message: `📱 Updated ${selectedId}`,
+                        content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))),
                         sha: sha
                     })
                 });
@@ -256,8 +267,6 @@
                 location.reload();
             } catch (error) {
                 alert("Error: " + error.message);
-                btn.disabled = false;
-                btn.innerText = "✨ Publish to Feed ✨";
             } finally {
                 btn.disabled = false;
                 btn.innerText = "✨ Publish to Feed ✨";

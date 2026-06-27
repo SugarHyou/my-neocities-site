@@ -2,7 +2,7 @@
   {
     "id": "art",
     "header": "RECENT ART",
-    "media": "/assets/art/Morax_(Jun_19,_2026).png",
+    "image": "/assets/art/Morax_(Jun_19,_2026).png",
     "title": "Morax (Jun 19, 2026)",
     "desc": "I missed some of my old characters. I was kind of worried about the color palette, but then I found my boy Morax! Hes perfect for it!",
     "link": "/art.html"
@@ -10,7 +10,7 @@
   {
     "id": "game",
     "header": "CURRENTLY PLAYING",
-    "media": "https://",
+    "image": "https://",
     "title": "Title",
     "desc": "Description",
     "link": "https://"
@@ -18,7 +18,7 @@
   {
     "id": "anime",
     "header": "CURRENTLY WATCHING",
-    "media": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fanimotaku.fr%2Fwp-content%2Fuploads%2F2025%2F11%2Fanime-needy-girl-overdose-visuel-5.jpg",
+    "image": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fanimotaku.fr%2Fwp-content%2Fuploads%2F2025%2F11%2Fanime-needy-girl-overdose-visuel-5.jpg",
     "title": "Needy Girl Overdose",
     "desc": "In a world where likes are currency and every viewer is a judge, OMGkawaiiAngel—also known as KAngel—is determined to become the ultimate “Internet Angel.” Yet beneath her pastel smile and lively streams, there’s more than meets the eye.",
     "link": "https://theindex.moe/library/anime"

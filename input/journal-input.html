@@ -19,7 +19,7 @@ label {
     align-self: flex-start;
 }
 
-#tag, input, textarea {
+input, textarea {
     width: 100%;
     padding: 10px;
     border: var(--small-border) solid var(--hot-pink);
@@ -63,11 +63,6 @@ textarea {
             <header></header>
             <div class="inner-box flex column">
                 <div class="app-card flex column align-center">
-
-                    <label for="tag">Category</label>
-                    <select id="tag">
-                        <option value="Personal">📖 Personal</option>
-                    </select>
 
                     <label for="title">Title</label>
                     <input type="text" id="title" placeholder="Leave blank for quick posts...">
@@ -171,7 +166,6 @@ textarea {
 
         async function publishPost() {
             const btn = document.getElementById('submit-btn');
-            const tagSelect = document.getElementById('tag');
             const title = document.getElementById('title').value;
             const content = document.getElementById('content').value;
 
@@ -188,11 +182,8 @@ textarea {
             const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
             const formattedDate = `${now.toLocaleDateString('en-US', dateOptions)} - ${now.toLocaleTimeString('en-US', timeOptions)}`;
 
-            const icon = tagSelect.value === 'Personal' ? '💭' : '📖';
-
             const newPost = {
                 date: formattedDate,
-                tag: tagSelect.value,
                 icon: icon,
                 title: title,
                 content: content
@@ -228,7 +219,7 @@ textarea {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        message: `📱 Posted a new ${newPost.tag} from phone`,
+                        message: `📱 Posted a new ${newPost} from phone`,
                         content: btoa(unescape(encodeURIComponent(JSON.stringify(currentPosts, null, 2)))),
                         sha: sha
                     })
