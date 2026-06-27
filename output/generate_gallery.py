@@ -52,17 +52,13 @@ if not os.path.exists(HTML_FILE):
 with open(HTML_FILE, "r", encoding="utf-8") as f:
     content = f.read()
 
-# Change the target variables to match the markers you just added
 target_start = ''
 target_end = ''
 
 if target_start in content and target_end in content:
-    # Get everything before the start marker
     top_half = content.split(target_start, 1)[0] + target_start
-    # Get everything after the end marker
     bottom_half = content.split(target_end, 1)[1]
 
-    # Combine them with your new gallery_block in the middle
     updated_content = f"{top_half}\n{gallery_block}\n{bottom_half}"
     
     with open(HTML_FILE, "w", encoding="utf-8") as f:
