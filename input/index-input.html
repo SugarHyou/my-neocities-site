@@ -236,7 +236,7 @@
                         reader.onloadend = () => resolve(reader.result.split(',')[1]);
                         reader.readAsDataURL(file);
                     });
-                    const uploadPath = `assets/art/${title.replace(/\s+/g, '_')}.png`;
+                    const uploadPath = `assets/art/${title.replace(/\s+/g, '-')}.png`;
                     const uploadUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${uploadPath}`;
                     await fetch(uploadUrl, {
                         method: 'PUT',

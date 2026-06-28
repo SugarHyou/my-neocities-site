@@ -2,7 +2,7 @@ import os
 import re
 from datetime import datetime
 
-# Change these lines at the top of your script:
+# Configuration
 ART_DIR = "../assets/art"
 HTML_FILE = "../art.html"
 
@@ -26,24 +26,27 @@ def get_art_date(filename):
 
 art_files.sort(key=get_art_date, reverse=True)
 
+# Generate the gallery cards
 cards_html = []
 for filename in art_files:
     caption = re.sub(r"\s*\(.*?\)", "", filename)
     caption = os.path.splitext(caption)[0]
+    web_path = f"/assets/art/{filename}" 
 
     card = f"""
-                                <div class="art-card">
-                                    <div class="art-frame">
-                                        <a href="/{ART_DIR}/{filename}">
-                                            <img src="/{ART_DIR}/{filename}" alt="{caption}">
-                                        </a>
-                                        <div class="art-caption">{caption}</div>
-                                    </div>
-                                </div>"""
+    <div class="art-card">
+        <div class="art-frame">
+            <a href="{web_path}">
+                <img src="{web_path}" alt="{caption}">
+            </a>
+            <div class="art-caption">{caption}</div>
+        </div>
+    </div>"""
     cards_html.append(card)
 
 gallery_block = "\n".join(cards_html)
 
+# Read and update the HTML file
 if not os.path.exists(HTML_FILE):
     print(f"❌ Error: Could not find '{HTML_FILE}'")
     input("Press Enter to exit...")
@@ -52,22 +55,21 @@ if not os.path.exists(HTML_FILE):
 with open(HTML_FILE, "r", encoding="utf-8") as f:
     content = f.read()
 
-target_start = ''
-target_end = ''
+target_start = '<!-- GALLERY_START -->'
+target_end = '<!-- GALLERY_END -->'
 
 if target_start in content and target_end in content:
+    # Change the split logic so it keeps the tags:
     top_half = content.split(target_start, 1)[0] + target_start
     bottom_half = content.split(target_end, 1)[1]
-
-    updated_content = f"{top_half}\n{gallery_block}\n{bottom_half}"
+    
+    # We put the markers back AROUND the gallery_block
+    updated_content = f"{top_half}\n{gallery_block}\n{target_end}{bottom_half}"
     
     with open(HTML_FILE, "w", encoding="utf-8") as f:
         f.write(updated_content)
     print("⚡ SugarHyou Gallery Automated! ✨")
 else:
-    print(
-        '❌ Error: Could not find the exact <div id="gallery-grid"...> tag in your art.html file.'
-    )
-    print("Please check Step 1 and make sure your container matches perfectly!")
+    print('❌ Error: Could not find <!-- GALLERY_START --> or <!-- GALLERY_END --> tags.')
 
 input("\nPress Enter to close...")

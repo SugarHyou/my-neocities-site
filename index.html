@@ -63,7 +63,7 @@
                   <span class="tag">#ALT</span>
                   <span class="tag">#ARTIST</span>
                   <span class="tag">#EUROBEATLOVER</span>
-                  <span class="tag">#FASHIONSTUDENT</span>
+                  <span class="tag">#ARTSTUDENT</span>
                   <span class="tag">#GYARU</span>
                   <span class="tag">#JPOP</span>
                   <span class="tag">#LEOPARDPRINT</span>
@@ -81,12 +81,9 @@
                           I'm an American artist obsessed with bright leopard prints and various alternative fashion!
                         </p>
                         <p class="lang-text"
-                          data-en="I'm currently registered in a cross-county College for a Fashion Design & Technologies Associates Degree. It's my dream to become a costume specialist for raves and/or theaters!"
+                          data-en="I'm currently registered in College for an Animation Associates Degree. It's my dream to become a an animator for an indie company!"
                           data-jp="現在は地域の大学でファッションデザイン＆テクノロジーの準学士号の取得に向けて勉強中♪ 将来の夢は、レイブや舞台演劇の衣装スペシャリストになることです！">
-                          I'm currently registered in a cross-county College for a Fashion Design & Technologies
-                          Associates
-                          Degree. It's my dream to become a costume specialist for raves and/or theaters!
-                        </p>
+                          I'm currently registered in a College for an Animation Associates Degree. It's my dream to become a an animator for an indie company!</p>
                       </div>
                       <div class="flex" style="gap: 10px;">
                         <div id="latest-post-content" style="flex: 1;">Loading...</div>
@@ -211,7 +208,7 @@
           <img src="${data.image}" style="max-height: 115px;">
           <div class="event-details">
             <div class="event-name flex row align-center" style="justify-content: space-between;">
-              <a href="${data.link}" style="font-size: var(--extra-large-font-size);">${data.name}</a>
+              <a href="${data.link}" style="font-size: var(--extra-large-font-size);">${data.title}</a>
               <p style="font-size: var(--small-font-size); margin-bottom: 10px;">${data.time}</p>
             </div>
             <br>
@@ -273,7 +270,6 @@
 
       container.innerHTML = data.map(card => `
         <div class="showcase-card">
-            <div class="card-header">${card.header}</div>
             <img src="${card.image}" class="card-img">
             <div class="card-content">
                 <span class="card-title">${card.title}</span>
