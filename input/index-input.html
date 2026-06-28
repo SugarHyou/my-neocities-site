@@ -16,7 +16,6 @@
         label {
             font-size: var(--large-font-size);
             color: var(--dark-berry);
-            align-self: flex-start;
         }
 
         #tag,
@@ -64,7 +63,7 @@
                 <div class="leopard-layer flex column">
                     <header></header>
                     <div class="inner-box flex column">
-                        <div class="app-card flex column align-center">
+                        <div class="app-card flex column">
 
                             <label for="tag">Which card to update?</label>
                             <select id="tag">
@@ -74,14 +73,30 @@
                                 <option value="anime">Currently Watching</option>
                             </select>
 
+                            <label for="title">Title</label>
+                            <input type="text" id="title">
+
+                            <div id="event-only-fields" class="flex column" style="width: 100%; gap: 10px;">
+                                <label for="event-link">Event URL</label>
+                                <input type="text" id="event-link" placeholder="https://...">
+
+                                <div class="flex row justify-center align-center" style="margin: 10px 0; gap: 10px;">
+                                    <label for="event-time">Time</label>
+                                    <input type="text" id="event-time" placeholder="e.g. 10:00 PM">
+
+                                    <label for="event-month">Month</label>
+                                    <input type="text" id="event-month" placeholder="e.g. JUN">
+
+                                    <label for="event-day">Day</label>
+                                    <input type="text" id="event-day" placeholder="e.g. 27">
+                                </div>
+                            </div>
+
                             <label for="file-upload">Upload Art (Optional)</label>
                             <input type="file" id="file-upload" accept="image/*">
 
                             <label for="media-url">Or Media URL</label>
                             <input type="text" id="media-url" placeholder="Paste link here...">
-
-                            <label for="title">Title</label>
-                            <input type="text" id="title">
 
                             <label for="content">Description</label>
                             <textarea id="content"></textarea>
@@ -190,6 +205,12 @@
             }
         }
 
+
+        document.getElementById('tag').addEventListener('change', function () {
+            const eventFields = document.getElementById('event-only-fields');
+            eventFields.style.display = (this.value === 'event') ? 'block' : 'none';
+        });
+
         async function publishPost() {
             const btn = document.getElementById('submit-btn');
             const fileInput = document.getElementById('file-upload');
@@ -236,10 +257,15 @@
                 let data = JSON.parse(decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, '')))));
 
                 if (isEvent) {
-                    // Treat as an object
                     data.title = title;
                     data.desc = content;
-                    if (imageUrl) data.image = imageUrl; // Ensure this matches your frontend key!
+                    if (imageUrl) data.image = imageUrl;
+
+                    // New fields
+                    data.link = document.getElementById('event-link').value;
+                    data.time = document.getElementById('event-time').value;
+                    data.month = document.getElementById('event-month').value;
+                    data.day = document.getElementById('event-day').value;
                 } else {
                     // Treat as an array
                     const index = data.findIndex(item => item.id === selectedId);
@@ -251,7 +277,7 @@
                 }
 
                 // Add this right before the final await fetch(url, { method: 'PUT', ... })
-console.log("Data being sent to GitHub:", JSON.stringify(data, null, 2));
+                console.log("Data being sent to GitHub:", JSON.stringify(data, null, 2));
 
                 await fetch(url, {
                     method: 'PUT',
