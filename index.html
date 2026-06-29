@@ -74,7 +74,7 @@
                   <div class="top-layout-container flex" style="align-items: flex-start; gap: 15px;">
                     <div class="flex column" style="flex: 1; gap: 10px; margin-right: 260px;">
                       <div class="speech-bubble right">
-                        <marquee behavior="alternate">Welcome to SugarHyou!</marquee>
+                        <marquee behavior="alternate"><h2>Welcome to SugarHyou!</h2></marquee>
                         <p class="lang-text"
                           data-en="I'm an American artist obsessed with bright leopard prints and various alternative fashion!"
                           data-jp="ド派手なヒョウ柄といろんなお姉系・ガル系のオルタナティブ・ファッションに大ハマリ中のアメリカ人アーティストです！">
@@ -83,7 +83,8 @@
                         <p class="lang-text"
                           data-en="I'm currently registered in College for an Animation Associates Degree. It's my dream to become a an animator for an indie company!"
                           data-jp="現在は地域の大学でファッションデザイン＆テクノロジーの準学士号の取得に向けて勉強中♪ 将来の夢は、レイブや舞台演劇の衣装スペシャリストになることです！">
-                          I'm currently registered in a College for an Animation Associates Degree. It's my dream to become a an animator for an indie company!</p>
+                          I'm currently registered in a College for an Animation Associates Degree. It's my dream to
+                          become a an animator for an indie company!</p>
                       </div>
                       <div class="flex" style="gap: 10px;">
                         <div id="latest-post-content" style="flex: 1;">Loading...</div>
@@ -96,9 +97,6 @@
                             </li>
                             <li style="border-bottom: 1px dashed var(--hot-pink); padding: 5px 0;">
                               <input type="checkbox" checked disabled> Peanut Butter & Jelly Sandwich
-                            </li>
-                            <li style="border-bottom: 1px dashed var(--hot-pink); padding: 5px 0;">
-                              <input type="checkbox" checked disabled> Teriyaki Bowl
                             </li>
                             <li style="border-bottom: 1px dashed var(--hot-pink); padding: 5px 0;">
                               <input type="checkbox" checked disabled> Ritz Crackers
@@ -117,7 +115,9 @@
             </div>
 
             <div class="collection-container flex wrap" id="showcase-container"></div>
-            <iframe src="https://sugarhyou.atabook.org/" style="min-height: 350px;"></iframe>
+            <iframe src="https://www3.cbox.ws/box/?boxid=3556468&boxtag=dfJo97" width="400px" allowtransparency="yes"
+              allow="autoplay" frameborder="1" marginheight="0" marginwidth="0" scrolling="auto"
+              style="min-height: 300px;"></iframe>
           </div>
         </div>
       </div>
@@ -270,6 +270,7 @@
 
       container.innerHTML = data.map(card => `
         <div class="showcase-card">
+          <h3 class="card-header">${card.header}</h3>
             <img src="${card.image}" class="card-img">
             <div class="card-content">
                 <span class="card-title">${card.title}</span>

@@ -86,6 +86,15 @@ header {
   position: relative;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--dark-berry);
+}
+
 h2 {
   font-size: var(--extra-large-font-size);
 }
